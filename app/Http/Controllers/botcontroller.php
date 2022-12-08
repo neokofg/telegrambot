@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 class botcontroller extends Controller
 {
     public function botControl($route = '', $params = [], $method = 'POST'){
-        $response = new Client(['base_uri' => 'https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/setwebhook?url=https://mpit14.ru/']);
+        $response = new Client(['base_uri' => 'https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/setwebhook?url=https://mpit14.ru/response']);
         $result = $response->request($method, $route, $params);
         return(string) $result->getBody();
     }

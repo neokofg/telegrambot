@@ -39,4 +39,4 @@ Route::get('/test', [\App\Http\Controllers\botcontroller::class, 'testBOT'])->na
         'text' => 'dont understand you'
     ];
     $response = file_get_contents("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-}
+}*/

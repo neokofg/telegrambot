@@ -17,5 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/bot', [\App\Http\Controllers\botcontroller::class, 'botControl'])->name('botControl');
-Route::post('/response', [\App\Http\Controllers\botcontroller::class, 'botResponse'])->name('botResponse');
+Route::post('/5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/webhook', function () {
+    $updates = Telegram::getWebhookUpdates();
+    return redirect()->route('testBOT');
+});
 Route::get('/test', [\App\Http\Controllers\botcontroller::class, 'testBOT'])->name('testBOT');

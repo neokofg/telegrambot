@@ -14,7 +14,6 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function botResponse(){
-        $update = json_decode(file_get_contents('php://input'));
         $data = [
             'chat_id' => '864640107',
             'text' => 'Hi there!'

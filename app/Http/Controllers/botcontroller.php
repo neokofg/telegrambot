@@ -14,8 +14,9 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function botResponse(Request $request){
+        $id = $_POST['id'];
         $data = [
-            'chat_id' => '864640107',
+            'chat_id' => $id,
             'text' => 'Hi there!'
         ];
         $response = file_get_contents("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));

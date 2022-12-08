@@ -13,7 +13,7 @@ class botcontroller extends Controller
         $result = $response->request($method, $route, $params);
         return(string) $result->getBody();
     }
-    public function botResponse(){
+    public function botResponse(Request $request){
         $data = [
             'chat_id' => '864640107',
             'text' => 'Hi there!'

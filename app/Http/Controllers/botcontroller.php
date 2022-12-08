@@ -18,6 +18,6 @@ class botcontroller extends Controller
             'chat_id' => '864640107',
             'text' => 'Hi there!'
         ];
-        $response = Http::response('https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?' . http_build_query($data));
+        $response = file_get_contents("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
     }
 }

@@ -17,3 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/bot', [\App\Http\Controllers\botcontroller::class, 'botControl'])->name('botControl');
+Route::get('/response', [\App\Http\Controllers\botcontroller::class, 'botResponse'])->name('botResponse');

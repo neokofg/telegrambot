@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 Route::get('/bot', [\App\Http\Controllers\botcontroller::class, 'botControl'])->name('botControl');
 Route::post('/5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/webhook', function () {
-    $result = json_decode($_POST['result'], true);
+    $update = json_decode(file_get_contents('php://input'));
     $data = [
         'chat_id' => '864640107',
         'text' => 'ok'

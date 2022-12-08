@@ -20,6 +20,23 @@ Route::get('/', function () {
 Route::get('/bot', [\App\Http\Controllers\botcontroller::class, 'botControl'])->name('botControl');
 Route::post('/5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/webhook', function () {
     $updates = Telegram::getWebhookUpdates();
-    return(string) $updates->getBody();
+    $data = [
+        'chat_id' => '864640107',
+        'text' => $updates->getBody()
+    ];
+    $response = file_get_contents("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
 });
 Route::get('/test', [\App\Http\Controllers\botcontroller::class, 'testBOT'])->name('testBOT');
+/*if($message == '/help'){
+    $data = [
+        'chat_id' => '864640107',
+        'text' => 'Helping you'
+    ];
+    $response = file_get_contents("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+}else{
+    $data = [
+        'chat_id' => '864640107',
+        'text' => 'dont understand you'
+    ];
+    $response = file_get_contents("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+}

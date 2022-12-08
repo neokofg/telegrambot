@@ -20,6 +20,6 @@ Route::get('/', function () {
 Route::get('/bot', [\App\Http\Controllers\botcontroller::class, 'botControl'])->name('botControl');
 Route::post('/5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/webhook', function () {
     $updates = Telegram::getWebhookUpdates();
-    return redirect()->route('testBOT');
+    return 'ok';
 });
 Route::get('/test', [\App\Http\Controllers\botcontroller::class, 'testBOT'])->name('testBOT');

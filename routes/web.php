@@ -18,16 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/bot', [\App\Http\Controllers\botcontroller::class, 'botControl'])->name('botControl');
-Route::post('/5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/webhook', function () {
-    $result = file_get_contents('php://input');
-    $update = json_decode($result);
-    $data = [
-        'chat_id' => '864640107',
-        'text' => $update->message->text
-    ];
-    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-    return true;
-});
+Route::post('/5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/webhook', [\App\Http\Controllers\botcontroller::class , 'botResponse']);
 Route::get('/test', [\App\Http\Controllers\botcontroller::class, 'testBOT'])->name('testBOT');
 /*if($message == '/help'){
     $data = [

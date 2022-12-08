@@ -14,8 +14,8 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function botResponse(){
-        $updates = Telegram::getWebhookUpdates();
-        if($updates['message'] == '/help'){
+        $message = $_POST['message'];
+        if($message == '/help'){
             $data = [
                 'chat_id' => '864640107',
                 'text' => 'Helping you'

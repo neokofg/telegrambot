@@ -25,13 +25,20 @@ class botcontroller extends Controller
         $update = json_decode($result);
         if($update->message->text == '/help'){
             $data = [
-                'chat_id' => '864640107',
+                'chat_id' => $update->message->chat->id,
                 'text' => 'Извините что я вас выебал'
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-        }else{
+        }else if($update->message->text == 'K4N') {
             $data = [
-                'chat_id' => '864640107',
+                'chat_id' => $update->message->chat->id,
+                'text' => 'КАНЧА'
+            ];
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+        }else{
+            }
+            $data = [
+                'chat_id' => $update->message->chat->id,
                 'text' => 'Я вас не понял'
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));

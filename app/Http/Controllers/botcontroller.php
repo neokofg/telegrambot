@@ -332,6 +332,8 @@ class botcontroller extends Controller
                     'reply_markup' => json_encode($decode)
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+            }else if($update->callback_query->data == 2){
+                
             }else if($update->callback_query->data == 3){
                 $userdata = array(
                     'status' => 'firstsendcity',

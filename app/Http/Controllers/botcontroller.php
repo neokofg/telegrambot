@@ -209,13 +209,6 @@ class botcontroller extends Controller
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                     }else if($userItem->status == 'phoneadvertclaim'){
-                        $userdata = array(
-                            'status' => 'advertclaimall',
-                            'phone' => $update->message->text,
-                            "updated_at" => date('Y-m-d H:i:s')
-                        );
-                        DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
-                    }else if($userItem->status == 'advertclaimall'){
                         $keyboard =
                             '{
                                 "inline_keyboard": [[
@@ -230,6 +223,12 @@ class botcontroller extends Controller
                                 ]
                             }';
                         $decode = json_decode($keyboard);
+                        $userdata = array(
+                            'status' => 'advertclaimall',
+                            'phone' => $update->message->text,
+                            "updated_at" => date('Y-m-d H:i:s')
+                        );
+                        DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
                             'text' => 'Вы хотите взять с собой посылку
@@ -238,7 +237,7 @@ class botcontroller extends Controller
                             Дата:'. $userItem->date . '
                             Вес:'. $userItem->weight .'
                             Что:'. $userItem->item.'
-                            Номер:'. $userItem->phone.'
+                            Номер:'. $update->message->text.'
                             '. $userItem->username,
                             'reply_to_message_id' => $update->message->message_id,
                             'reply_markup' => json_encode($decode)

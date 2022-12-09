@@ -14,6 +14,8 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function testBOT(){
+        $inlinekeyboard = '{"inline_keyboard": [[{"text": "Посмотреть обьявления", "callback_data": "1"},{"text": "Добавить обьявление", "callback_data": "2"}]]}';
+        echo json_encode($inlinekeyboard);
     }
     public function botResponse(){
         $result = file_get_contents('php://input');

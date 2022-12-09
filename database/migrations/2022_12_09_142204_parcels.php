@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('userid');
             $table->string('firstcity');
             $table->string('secondcity');
-            $table->string('date');
+            $table->string('date')->nullable();
             $table->string('weight');
             $table->string('item');
             $table->string('phone');

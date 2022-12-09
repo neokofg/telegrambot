@@ -14,11 +14,16 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function testBOT(){
-        $data = [
-            'chat_id' => '864640107',
-            'text' => 'Hi there!'
-        ];
-        $response = file_get_contents("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+        $reply = array('inline_keyboard' => array('Посмотреть обьявления' => array('callback_data' => 1), 'Добавить обьявление' => array('callback_data' => 2)));
+        $newReply = array();
+        $i = 0;
+        foreach ($reply as $replyKey => $replyData){
+            $newReply[$i]['text'] = $replyKey;
+            $newReply[$i]['callback_data'] = $replyData['callback_data'];
+            $i++;
+        }
+        $encodedReply = json_encode($newReply);
+        echo $encodedReply;
     }
     public function botResponse(){
         $result = file_get_contents('php://input');

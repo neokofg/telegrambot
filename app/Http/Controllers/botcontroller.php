@@ -141,19 +141,13 @@ class botcontroller extends Controller
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Откуда:'. $parcel->firstcity .
-                                    '
-                                    Куда:'. $parcel->secondcity .
-                                    '
-                                    Дата:'. $parcel->date .
-                                    '
-                                    Вес:'. $parcel->weight .
-                                    '
-                                    Что:'. $parcel->item.
-                                    '
-                                    Номер:'. $parcel->phone.
-                                    '
-                                    '. $parcel->username,
+                                'text' => 'Откуда:'. $parcel->firstcity . '
+                                Куда:'. $parcel->secondcity .'
+                                Дата:'. $parcel->date .'
+                                Вес:'. $parcel->weight .'
+                                Что:'. $parcel->item.'
+                                Номер:'. $parcel->phone.'
+                                '. $parcel->username,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         }
@@ -170,19 +164,13 @@ class botcontroller extends Controller
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Откуда: '. $parcel->firstcity .
-                                    '
-                                    Куда: '. $parcel->secondcity .
-                                    '
-                                    Дата: '. $parcel->date .
-                                    '
-                                    Вес: '. $parcel->weight .
-                                    '
-                                    Что: '. $parcel->item.
-                                    '
-                                    Номер: '. $parcel->phone.
-                                    '
-                                    '. $parcel->username,
+                                'text' => 'Откуда:'. $parcel->firstcity . '
+                                Куда:'. $parcel->secondcity .'
+                                Дата:'. $parcel->date .'
+                                Вес:'. $parcel->weight .'
+                                Что:'. $parcel->item.'
+                                Номер:'. $parcel->phone.'
+                                '. $parcel->username,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         }

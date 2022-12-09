@@ -26,16 +26,12 @@ class botcontroller extends Controller
         if($update->message->text == '/start'){
             $data = [
                 'chat_id' => $update->message->chat->id,
+                'reply_to_message_id' => $update->message->message_id,
                 'text' => 'Все мы попадали в ситуацию, когда срочно нужно отправить документы в другой город. Почтой России очень долго, другими службами дорого, а ещё нужно, чтобы документы прибыли на следующий день. Особенно в нынешнее неспокойное время.
 
 Для этого и был создан канал GETLET https://t.me/getlet, в первую очередь для взаимопомощи между земляками из Республики Саха (Якутия), а также как возможность получить дополнительный заработок'
             ];
-            $data3 = [
-                'chat_id' => $update->message->from->id,
-                'from_chat_id' => $update->message->chat->id,
-                'message_id' => $update->message->message_id
-            ];
-            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/forwardMessage?". http_build_query($data3) ."&sendMessage?" . http_build_query($data));
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
         }else if($update->message->text == '/help'){
             $data = [
                 'chat_id' => $update->message->chat->id,

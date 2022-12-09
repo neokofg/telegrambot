@@ -20,6 +20,7 @@ class botcontroller extends Controller
         $result = file_get_contents('php://input');
         $update = json_decode($result);
         $user = DB::table('users')->where('userid','=',$update->message->from->id)->get();
+        // message ->
         if (isset($update->message)) {
             $keyboard =
             '{
@@ -90,6 +91,7 @@ class botcontroller extends Controller
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
             }
         }
+        // callback ->
         if (isset($update->callback_query)) {
             if($update->callback_query->data == 1){
                 $data2 = [
@@ -120,8 +122,8 @@ class botcontroller extends Controller
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }else if($update->callback_query->data == 3){
                 $userdata = array(
-                    'status' => 'sendcity',
-                    "updated_at" => date('Y-m-d H:i:s')
+                    'status' => 'firstsendcity',
+                    'updated_at' => date('Y-m-d H:i:s')
                 );
                 DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
                 $data2 = [
@@ -131,8 +133,8 @@ class botcontroller extends Controller
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }else if($update->callback_query->data == 4){
                 $userdata = array(
-                    'status' => 'claimcity',
-                    "updated_at" => date('Y-m-d H:i:s')
+                    'status' => 'firstclaimcity',
+                    'updated_at' => date('Y-m-d H:i:s')
                 );
                 DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
                 $data2 = [

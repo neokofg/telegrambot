@@ -68,13 +68,13 @@ class botcontroller extends Controller
     ]
 }';
         $decode = json_decode($callback);
-        if (isset($decode['callback_query'])) {
+        if (isset($decode->callback_query)) {
             echo 'good';
         }
     }
     public function botResponse(){
         $result = file_get_contents('php://input');
-        $update = json_decode($result);
+        $update = json_decode($result, true);
         $keyboard = '{
             "inline_keyboard": [[
                 {

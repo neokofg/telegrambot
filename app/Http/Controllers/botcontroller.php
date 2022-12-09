@@ -187,7 +187,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Когда вы едете?',
+                            'text' => 'Когда вы едете?'.PHP_EOL.'Формат: дд.мм.гггг',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -200,7 +200,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Посылку с каким весом вы можете взять с собой? Введите число в кг, а если только документы, то введите 0',
+                            'text' => 'Посылку с каким весом вы можете взять с собой?'.PHP_EOL.' Введите число в кг, а если только документы, то введите 0',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -213,7 +213,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Что можете взять с собой? Пример: документы, мелкие посылки, багаж',
+                            'text' => 'Что можете взять с собой?'.PHP_EOL.'Пример: документы, мелкие посылки, багаж',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -226,7 +226,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Напишите ваш контактный телефон',
+                            'text' => 'Напишите ваш контактный телефон'.PHP_EOL.'Пример: +79249683023',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -280,7 +280,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Какой вес вашей посылки? Введите число в кг, а если у вас документ, то введите 0',
+                            'text' => 'Какой вес вашей посылки?'.PHP_EOL.'Введите число в кг, а если у вас документ, то введите 0',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -293,7 +293,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Напишите описание вашей посылки. Пример: телефон/ пакет с одеждой/ багаж',
+                            'text' => 'Напишите описание вашей посылки.'.PHP_EOL.' Пример: телефон/ пакет с одеждой/ багаж',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -306,7 +306,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Напишите ваш контактный телефон',
+                            'text' => 'Напишите ваш контактный телефон'.PHP_EOL.'Пример: +79249683023',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));

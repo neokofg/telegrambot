@@ -471,9 +471,10 @@ class botcontroller extends Controller
                     DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
                     $data2 = [
                         'chat_id' => $update->callback_query->from->id,
+                        'message_id' => $update->callback_query->message->message_id,
                         'text' => 'Ваше обьявление было добавлено!',
                     ];
-                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
                 }
             }else if($update->callback_query->data == 8){
                 $userdata = array(
@@ -489,9 +490,10 @@ class botcontroller extends Controller
                 DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
+                    'message_id' => $update->callback_query->message->message_id,
                     'text' => 'Откуда вы можете взять посылку?',
                 ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
             }else if($update->callback_query->data == 9){
                 foreach ($user as $userItem){
                     $parceldata = array(
@@ -520,9 +522,10 @@ class botcontroller extends Controller
                     DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
                     $data2 = [
                         'chat_id' => $update->callback_query->from->id,
+                        'message_id' => $update->callback_query->message->message_id,
                         'text' => 'Ваше обьявление было добавлено!',
                     ];
-                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
                 }
             }else if($update->callback_query->data == 10){
                 $userdata = array(
@@ -538,9 +541,10 @@ class botcontroller extends Controller
                 DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
+                    'message_id' => $update->callback_query->message->message_id,
                     'text' => 'Откуда вы хотите отправить посылку?',
                 ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
             }
         }
     }

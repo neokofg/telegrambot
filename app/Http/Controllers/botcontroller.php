@@ -405,9 +405,10 @@ class botcontroller extends Controller
                 DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
+                    'message_id' => $update->callback_query->message->message_id,
                     'text' => 'Город отправления',
                 ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
             }else if($update->callback_query->data == 4){
                 $userdata = array(
                     'status' => 'firstclaimcity',
@@ -416,9 +417,10 @@ class botcontroller extends Controller
                 DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
+                    'message_id' => $update->callback_query->message->message_id,
                     'text' => 'Город отправления',
                 ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
             }else if($update->callback_query->data == 5){
                 $userdata = array(
                     'status' => 'firstadvertsendcity',

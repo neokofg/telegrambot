@@ -235,11 +235,13 @@ class botcontroller extends Controller
                                 "inline_keyboard": [[
                                     {
                                         "text": "Да",
-                                        "callback_data": "7"
+                                        "callback_data": "7",
+                                        "one_time_keyboard": true
                                     },
                                     {
                                         "text": "Нет",
-                                        "callback_data": "8"
+                                        "callback_data": "8",
+                                        "one_time_keyboard": true
                                     }]
                                 ]
                             }';

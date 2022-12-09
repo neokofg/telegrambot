@@ -40,19 +40,35 @@ class botcontroller extends Controller
             $decode = json_decode($keyboard);
             if($update->message->text == '/start'){
                 if($user == '[]'){
-                    $userdata = array(
-                        'userid' => $update->message->from->id,
-                        'chatid' => $update->message->chat->id,
-                        'first_name' => $update->message->from->first_name,
-                        'last_name' => $update->message->from->last_name,
-                        'username' => '@'.$update->message->from->username,
-                        'language_code' => $update->message->from->language_code,
-                        'status' => 'started',
-                        'isstart' => 'true',
-                        'passport' => 'false',
-                        'created_at' =>  date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s')
-                    );
+                    if(isset($update->message->from->last_name)){
+                        $userdata = array(
+                            'userid' => $update->message->from->id,
+                            'chatid' => $update->message->chat->id,
+                            'first_name' => $update->message->from->first_name,
+                            'last_name' => $update->message->from->last_name,
+                            'username' => '@'.$update->message->from->username,
+                            'language_code' => $update->message->from->language_code,
+                            'status' => 'started',
+                            'isstart' => 'true',
+                            'passport' => 'false',
+                            'created_at' =>  date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s')
+                        );
+                    }else{
+                        $userdata = array(
+                            'userid' => $update->message->from->id,
+                            'chatid' => $update->message->chat->id,
+                            'first_name' => $update->message->from->first_name,
+                            'last_name' => ' ',
+                            'username' => '@'.$update->message->from->username,
+                            'language_code' => $update->message->from->language_code,
+                            'status' => 'started',
+                            'isstart' => 'true',
+                            'passport' => 'false',
+                            'created_at' =>  date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s')
+                        );
+                    }
                     DB::table('users')->insert($userdata);
                     $data = [
                         'chat_id' => $update->message->chat->id,

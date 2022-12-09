@@ -252,7 +252,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Вы хотите взять с собой посылку '.PHP_EOL.'Откуда: '. $userItem->firstcity.PHP_EOL.'Куда: '. $userItem->secondcity .PHP_EOL.'Дата: '. $userItem->date.PHP_EOL.'Вес: '. $userItem->weight .PHP_EOL.'Что: '. $userItem->item.PHP_EOL.'Номер: '. $update->message->text.PHP_EOL.''. $userItem->username,
+                            'text' => 'Вы хотите взять с собой посылку '.PHP_EOL.'Откуда: '. $userItem->firstcity.PHP_EOL.'Куда: '. $userItem->secondcity .PHP_EOL.'Вес: '. $userItem->weight .PHP_EOL.'Что: '. $userItem->item.PHP_EOL.'Номер: '. $update->message->text.PHP_EOL.''. $userItem->username,
                             'reply_to_message_id' => $update->message->message_id,
                             'reply_markup' => json_encode($decode)
                         ];

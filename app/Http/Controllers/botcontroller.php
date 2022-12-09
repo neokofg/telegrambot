@@ -261,6 +261,7 @@ class botcontroller extends Controller
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
                     'text' => 'Выберите тип обьявления',
+                    'reply_markup' => json_encode($decode)
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }else if($update->callback_query->data == 1){

@@ -14,63 +14,6 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function testBOT(){
-        $callback = '{
-    "ok": true,
-    "result": [
-        {
-            "update_id": 255182984,
-            "callback_query": {
-                "id": "3713600984786264740",
-                "from": {
-                    "id": 864640107,
-                    "is_bot": false,
-                    "first_name": "Андрей",
-                    "last_name": "Архангельский",
-                    "username": "neokocs",
-                    "language_code": "ru"
-                },
-                "message": {
-                    "message_id": 244,
-                    "from": {
-                        "id": 5716304295,
-                        "is_bot": true,
-                        "first_name": "GetLet",
-                        "username": "GetLet2_bot"
-                    },
-                    "chat": {
-                        "id": 864640107,
-                        "first_name": "Андрей",
-                        "last_name": "Архангельский",
-                        "username": "neokocs",
-                        "type": "private"
-                    },
-                    "date": 1670587570,
-                    "text": "Что вы хотите сделать?",
-                    "reply_markup": {
-                        "inline_keyboard": [
-                            [
-                                {
-                                    "text": "Посмотреть обьявления",
-                                    "callback_data": "1"
-                                },
-                                {
-                                    "text": "Добавить обьявление",
-                                    "callback_data": "2"
-                                }
-                            ]
-                        ]
-                    }
-                },
-                "chat_instance": "-2032696218620492911",
-                "data": "1"
-            }
-        }
-    ]
-}';
-        $decode = json_decode($callback);
-        if (isset($decode->callback_query)) {
-            echo 'good';
-        }
     }
     public function botResponse(){
         $result = file_get_contents('php://input');
@@ -87,6 +30,9 @@ class botcontroller extends Controller
                 }]
             ]
         }';
+        if (isset($update->callback_query)) {
+            echo 'good';
+        }
         $decode = json_decode($keyboard);
         if($update->message->text == '/start'){
             $data = [

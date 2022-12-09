@@ -121,12 +121,20 @@ class botcontroller extends Controller
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
-                        $data = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Список',
-                            'reply_to_message_id' => $update->message->message_id,
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        $parcels = DB::table('parcels')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=', $userItem->secondcity)->get();
+                        foreach ($parcels as $parcel){
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Откуда:'. $parcel->firstcity . '
+                                Куда:'. $parcel->secondcity . '
+                                Дата:'. $parcel->date . '
+                                Вес:'. $parcel->weight .'
+                                Что:'. $parcel->item.'
+                                Номер:'. $parcel->phone.'
+                                '. $parcel->username,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }
                         // ----
                     }else if($userItem->status == 'secondsendcity'){
                         $userdata = array(

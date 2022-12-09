@@ -20,59 +20,6 @@ class botcontroller extends Controller
         $result = file_get_contents('php://input');
         $update = json_decode($result);
         $user = DB::table('users')->where('userid','=',$update->message->from->id)->get();
-        if (isset($update->callback_query)) {
-            if($update->callback_query->data == 1){
-                $data2 = [
-                    'chat_id' => $update->callback_query->from->id,
-                    'text' => 'Вы выбрали 1',
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-            }else if($update->callback_query->data == 2){
-                $keyboard =
-                '{
-                    "inline_keyboard": [[
-                        {
-                            "text": "Отправлю",
-                            "callback_data": "3"
-                        },
-                        {
-                            "text": "Возьму",
-                            "callback_data": "4"
-                        }]
-                    ]
-                }';
-                $decode = json_decode($keyboard);
-                $data2 = [
-                    'chat_id' => $update->callback_query->from->id,
-                    'text' => 'Выберите тип обьявления',
-                    'reply_markup' => json_encode($decode)
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-            }else if($update->callback_query->data == 3){
-                $userdata = array(
-                    'status' => 'sendcity',
-                    "updated_at" => date('Y-m-d H:i:s')
-                );
-                DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
-                $data2 = [
-                    'chat_id' => $update->callback_query->from->id,
-                    'text' => 'Город отправления',
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-            }else if($update->callback_query->data == 4){
-                $userdata = array(
-                    'status' => 'claimcity',
-                    "updated_at" => date('Y-m-d H:i:s')
-                );
-                DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
-                $data2 = [
-                    'chat_id' => $update->callback_query->from->id,
-                    'text' => 'Город отправления',
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-            }
-
-        }
         if (isset($update->message)) {
             $keyboard =
             '{
@@ -142,6 +89,59 @@ class botcontroller extends Controller
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
             }
+        }
+        if (isset($update->callback_query)) {
+            if($update->callback_query->data == 1){
+                $data2 = [
+                    'chat_id' => $update->callback_query->from->id,
+                    'text' => 'Вы выбрали 1',
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+            }else if($update->callback_query->data == 2){
+                $keyboard =
+                    '{
+                    "inline_keyboard": [[
+                        {
+                            "text": "Отправлю",
+                            "callback_data": "3"
+                        },
+                        {
+                            "text": "Возьму",
+                            "callback_data": "4"
+                        }]
+                    ]
+                }';
+                $decode = json_decode($keyboard);
+                $data2 = [
+                    'chat_id' => $update->callback_query->from->id,
+                    'text' => 'Выберите тип обьявления',
+                    'reply_markup' => json_encode($decode)
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+            }else if($update->callback_query->data == 3){
+                $userdata = array(
+                    'status' => 'sendcity',
+                    "updated_at" => date('Y-m-d H:i:s')
+                );
+                DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
+                $data2 = [
+                    'chat_id' => $update->callback_query->from->id,
+                    'text' => 'Город отправления',
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+            }else if($update->callback_query->data == 4){
+                $userdata = array(
+                    'status' => 'claimcity',
+                    "updated_at" => date('Y-m-d H:i:s')
+                );
+                DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
+                $data2 = [
+                    'chat_id' => $update->callback_query->from->id,
+                    'text' => 'Город отправления',
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+            }
+
         }
     }
 }

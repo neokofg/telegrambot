@@ -14,16 +14,15 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function testBOT(){
-        $reply = array('inline_keyboard' => array('Посмотреть обьявления' => array('callback_data' => 1), 'Добавить обьявление' => array('callback_data' => 2)));
-        $newReply = array();
-        $i = 0;
-        foreach ($reply as $replyKey => $replyData){
-            $newReply[$i]['text'] = $replyKey;
-            $newReply[$i]['callback_data'] = $replyData['callback_data'];
-            $i++;
-        }
-        $encodedReply = json_encode($newReply);
-        echo $encodedReply;
+        $data = '{
+            "inline_keyboard": [
+                [
+                    {"text": "Yes", "url": "http://www.google.com/"},
+                    {"text": "No", "url": "http://www.google.com/"}
+                ]
+            ]
+        }';
+        echo json_encode($data);
     }
     public function botResponse(){
         $result = file_get_contents('php://input');
@@ -37,21 +36,6 @@ class botcontroller extends Controller
 Для этого и был создан канал GETLET https://t.me/getlet, в первую очередь для взаимопомощи между земляками из Республики Саха (Якутия), а также как возможность получить дополнительный заработок'
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-            $reply = array('inline_keyboard' => array('Посмотреть обьявления' => array('callback_data' => 1), 'Добавить обьявление' => array('callback_data' => 2)));
-            $newReply = array();
-            $i = 0;
-            foreach ($reply as $replyKey => $replyData){
-                $newReply[$i]['text'] = $replyKey;
-                $newReply[$i]['callback_data'] = $replyData['callback_data'];
-                $i++;
-            }
-            $encodedReply = json_encode($newReply);
-            $data2 = [
-                'chat_id' => $update->message->chat->id,
-                'text' => 'Что вы хотите сделать?',
-                "reply_markup"=> $encodedReply
-            ];
-            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
         }else if($update->message->text == '/help'){
             $data = [
                 'chat_id' => $update->message->chat->id,

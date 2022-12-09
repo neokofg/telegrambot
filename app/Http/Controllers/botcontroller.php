@@ -218,13 +218,13 @@ class botcontroller extends Controller
                         $data = [
                             'chat_id' => $update->message->chat->id,
                             'text' => 'Вы хотите взять с собой посылку
-                            /n Откуда:'. $userItem->firstcity . '
-                            /n Куда:'. $userItem->secondcity . '
-                            /n Дата:'. $userItem->date . '
-                            /n Вес:'. $userItem->weight .'
-                            /n Что:'. $userItem->item.'
-                            /n Номер:'. $userItem->phone.'
-                            /n '. $userItem->username,
+                            Откуда:'. $userItem->firstcity . '
+                            Куда:'. $userItem->secondcity . '
+                            Дата:'. $userItem->date . '
+                            Вес:'. $userItem->weight .'
+                            Что:'. $userItem->item.'
+                            Номер:'. $userItem->phone.'
+                            '. $userItem->username,
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));

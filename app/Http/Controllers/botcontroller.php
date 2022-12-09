@@ -94,6 +94,17 @@ class botcontroller extends Controller
                 }else{
                     foreach ($user as $userItem){
                         if($userItem->isstart == 'true'){
+                            $userdata = array(
+                                'status' => 'started',
+                                'firstcity' => 'null',
+                                'secondcity' => 'null',
+                                'date' => 'null',
+                                'weight' => 'null',
+                                'item' => 'null',
+                                'phone' => 'null',
+                                "updated_at" => date('Y-m-d H:i:s')
+                            );
+                            DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                             $data2 = [
                                 'chat_id' => $update->message->chat->id,
                                 'text' => 'Что вы хотите сделать?',

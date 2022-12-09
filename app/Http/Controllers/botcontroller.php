@@ -84,6 +84,35 @@ class botcontroller extends Controller
                     }
                 }
             }else{
+                foreach($user as $userItem){
+                    if($userItem->status == 'firstclaimcity'){
+                        $userdata = array(
+                            'status' => 'secondclaimcity',
+                            'firstcity' => $update->message->text,
+                            "updated_at" => date('Y-m-d H:i:s')
+                        );
+                        DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                        $data = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Город прибытия',
+                            'reply_to_message_id' => $update->message->message_id,
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                    }else if($userItem->status == 'firstsendcity'){
+                        $userdata = array(
+                            'status' => 'secondsendcity',
+                            'firstcity' => $update->message->text,
+                            "updated_at" => date('Y-m-d H:i:s')
+                        );
+                        DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                        $data = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Город прибытия',
+                            'reply_to_message_id' => $update->message->message_id,
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                    }
+                }
                 $data = [
                     'chat_id' => $update->message->chat->id,
                     'text' => 'Я вас не понял'

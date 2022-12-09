@@ -19,7 +19,9 @@ class botcontroller extends Controller
     public function botResponse(){
         $result = file_get_contents('php://input');
         $update = json_decode($result);
+
         // message ->
+
         if (isset($update->message)) {
             $user = DB::table('users')->where('userid','=',$update->message->from->id)->get();
             $keyboard =
@@ -111,16 +113,45 @@ class botcontroller extends Controller
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                    }else if($userItem->status == 'secondclaimcity'){
+                        $userdata = array(
+                            'status' => 'both',
+                            'firstcity' => $update->message->text,
+                            "updated_at" => date('Y-m-d H:i:s')
+                        );
+                        DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                        $data = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Список',
+                            'reply_to_message_id' => $update->message->message_id,
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                    }else if($userItem->status == 'secondsendcity'){
+                        $userdata = array(
+                            'status' => 'both',
+                            'firstcity' => $update->message->text,
+                            "updated_at" => date('Y-m-d H:i:s')
+                        );
+                        DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                        $data = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Список',
+                            'reply_to_message_id' => $update->message->message_id,
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                    }else{
+                        $data = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Я вас не понял'
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                     }
                 }
-                $data = [
-                    'chat_id' => $update->message->chat->id,
-                    'text' => 'Я вас не понял'
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
             }
         }
+
         // callback ->
+
         if (isset($update->callback_query)) {
             $user = DB::table('users')->where('userid','=',$update->callback_query->message->from->id)->get();
             if($update->callback_query->data == 1){

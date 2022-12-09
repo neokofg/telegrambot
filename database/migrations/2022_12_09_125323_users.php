@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('username');
             $table->string('language_code');
             $table->string('status');
+            $table->string('firstcity')->nullable();
+            $table->string('secondcity')->nullable();
             $table->string('isstart');
             $table->string('passport');
             $table->timestamps();

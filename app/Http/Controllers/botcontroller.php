@@ -32,28 +32,21 @@ class botcontroller extends Controller
 Для этого и был создан канал GETLET https://t.me/getlet, в первую очередь для взаимопомощи между земляками из Республики Саха (Якутия), а также как возможность получить дополнительный заработок'
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+            $reply = array('inline_keyboard' => array('Посмотреть обьявления' => array('callback_data' => 1), 'Добавить обьявление' => array('callback_data' => 2)));
+            $newReply = array();
+            $i = 0;
+            foreach ($newReply as $replyKey => $replyData){
+                $newReply[$i]['text'] = $replyKey;
+                $newReply[$i]['callback_data'] = $replyData['callback_data'];
+                $i++;
+            }
+            $encodedReply = json_encode($newReply);
             $data2 = [
                 'chat_id' => $update->message->chat->id,
                 'text' => 'Что вы хотите сделать?',
+                "reply_markup"=> $encodedReply
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-            /*$data2 = [
-                'chat_id' => $update->message->chat->id,
-                'text' => 'Что вы хотите сделать?',
-                'reply_markup' => "{
-                'inline_keyboard':[{
-                    'InlineKeyboardButton':{
-                        'text': 'Посмотреть обьявления'
-                        'callback_data': '1'
-                        }
-                    'InlineKeyboardButton':{
-                        'text': 'Добавить обьявление'
-                        'callback_data': '2'
-                        }
-                    }]
-                }"
-            ];
-            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));*/
         }else if($update->message->text == '/help'){
             $data = [
                 'chat_id' => $update->message->chat->id,

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 
 class botcontroller extends Controller
 {
@@ -472,7 +473,7 @@ class botcontroller extends Controller
                     $data2 = [
                         'chat_id' => $update->callback_query->from->id,
                         'message_id' => $update->callback_query->message->message_id,
-                        'text' => 'Ваше обьявление было добавлено!',
+                        'text' => 'Ваше обьявление было добавлено!' .PHP_EOL.'Если хотите сделать что-то еще, то напишите /start',
                     ];
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
                 }
@@ -523,7 +524,7 @@ class botcontroller extends Controller
                     $data2 = [
                         'chat_id' => $update->callback_query->from->id,
                         'message_id' => $update->callback_query->message->message_id,
-                        'text' => 'Ваше обьявление было добавлено!',
+                        'text' => 'Ваше обьявление было добавлено!' .PHP_EOL .'Если хотите сделать что-то еще, то напишите /start',
                     ];
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
                 }

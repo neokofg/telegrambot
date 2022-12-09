@@ -14,19 +14,11 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function testBOT(){
-        $data = '{
-            "inline_keyboard": [
-                [
-                    {"text": "Yes", "url": "http://www.google.com/"},
-                    {"text": "No", "url": "http://www.google.com/"}
-                ]
-            ]
-        }';
-        echo json_encode($data);
     }
     public function botResponse(){
         $result = file_get_contents('php://input');
         $update = json_decode($result);
+        $inlinekeyboard = '{"inline_keyboard": [[{"text": "Посмотреть обьявления", "callback_data": "1"},{"text": "Добавить обьявление", "callback_data": "2"}]]}';
         if($update->message->text == '/start'){
             $data = [
                 'chat_id' => $update->message->chat->id,
@@ -36,6 +28,12 @@ class botcontroller extends Controller
 Для этого и был создан канал GETLET https://t.me/getlet, в первую очередь для взаимопомощи между земляками из Республики Саха (Якутия), а также как возможность получить дополнительный заработок'
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+            $data2 = [
+                'chat_id' => $update->message->chat->id,
+                'text' => 'Что вы хотите сделать?',
+                'reply_markup' => json_encode($inlinekeyboard)
+            ];
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
         }else if($update->message->text == '/help'){
             $data = [
                 'chat_id' => $update->message->chat->id,

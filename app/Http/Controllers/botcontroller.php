@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class botcontroller extends Controller
 {
@@ -106,7 +107,7 @@ class botcontroller extends Controller
                     if($userItem->status == 'firstclaimcity'){
                         $userdata = array(
                             'status' => 'secondclaimcity',
-                            'firstcity' => ucfirst($update->message->text),
+                            'firstcity' => Str::ucfirst($update->message->text),
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
@@ -119,7 +120,7 @@ class botcontroller extends Controller
                     }else if($userItem->status == 'firstsendcity'){
                         $userdata = array(
                             'status' => 'secondsendcity',
-                            'firstcity' =>  ucfirst($update->message->text),
+                            'firstcity' =>  Str::ucfirst($update->message->text),
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
@@ -132,12 +133,12 @@ class botcontroller extends Controller
                     }else if($userItem->status == 'secondclaimcity'){
                         $userdata = array(
                             'status' => 'both',
-                            'secondcity' =>  ucfirst($update->message->text),
+                            'secondcity' =>  Str::ucfirst($update->message->text),
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
-                        $parcels = DB::table('parcels')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=',  ucfirst($update->message->text))->get();
+                        $parcels = DB::table('parcels')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=',  Str::ucfirst($update->message->text))->get();
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
@@ -149,12 +150,12 @@ class botcontroller extends Controller
                     }else if($userItem->status == 'secondsendcity'){
                         $userdata = array(
                             'status' => 'both',
-                            'secondcity' =>  ucfirst($update->message->text),
+                            'secondcity' =>  Str::ucfirst($update->message->text),
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
-                        $parcels = DB::table('parcels')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=',  ucfirst($update->message->text))->get();
+                        $parcels = DB::table('parcels')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=',  Str::ucfirst($update->message->text))->get();
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
@@ -166,7 +167,7 @@ class botcontroller extends Controller
                     }else if($userItem->status == 'firstadvertclaimcity'){
                         $userdata = array(
                             'status' => 'secondadvertclaimcity',
-                            'firstcity' =>  ucfirst($update->message->text),
+                            'firstcity' =>  Str::ucfirst($update->message->text),
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
@@ -179,7 +180,7 @@ class botcontroller extends Controller
                     }else if($userItem->status == 'secondadvertclaimcity'){
                         $userdata = array(
                             'status' => 'dateadvertclaim',
-                            'secondcity' =>  ucfirst($update->message->text),
+                            'secondcity' =>  Str::ucfirst($update->message->text),
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);

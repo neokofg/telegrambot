@@ -336,7 +336,26 @@ class botcontroller extends Controller
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }else if($update->callback_query->data == 7){
-
+                foreach ($user as $userItem){
+                    $parceldata = array(
+                        'userid' => $userItem->userid,
+                        'firstcity' => $userItem->firstcity,
+                        'secondcity' => $userItem->secondcity,
+                        'date' => $userItem->date,
+                        'weight' => $userItem->weight,
+                        'item'=> $userItem->item,
+                        'phone'=> $userItem->phone,
+                        'username' =>$userItem->username,
+                        'created_at' =>  date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    );
+                    DB::table('parcels')->insert($parceldata);
+                    $data2 = [
+                        'chat_id' => $update->callback_query->from->id,
+                        'text' => 'Ваше обьявление было добавлено!',
+                    ];
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                }
             }else if($update->callback_query->data == 8){
                 $userdata = array(
                     'status' => 'firstadvertclaimcity',

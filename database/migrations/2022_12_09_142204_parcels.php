@@ -13,7 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('parcels', function (Blueprint $table) {
+            $table->id();
+            $table->string('userid');
+            $table->string('firstcity');
+            $table->string('secondcity');
+            $table->string('date');
+            $table->string('weight');
+            $table->string('item');
+            $table->string('phone');
+            $table->string('username');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('parcels');
     }
 };

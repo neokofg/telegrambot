@@ -137,7 +137,7 @@ class botcontroller extends Controller
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
-                        $parcels = DB::table('parcels')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=', $userItem->secondcity)->get();
+                        $parcels = DB::table('parcels')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=', $update->message->text)->get();
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
@@ -160,7 +160,7 @@ class botcontroller extends Controller
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
-                        $parcels = DB::table('parcels')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=', $userItem->secondcity)->get();
+                        $parcels = DB::table('parcels')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=', $update->message->text)->get();
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,

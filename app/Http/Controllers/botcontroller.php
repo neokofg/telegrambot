@@ -158,7 +158,7 @@ class botcontroller extends Controller
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                     }else if($userItem->status == 'secondadvertclaimcity'){
                         $userdata = array(
-                            'status' => 'timeadvertclaim',
+                            'status' => 'dateadvertclaim',
                             'secondcity' => $update->message->text,
                             "updated_at" => date('Y-m-d H:i:s')
                         );
@@ -169,10 +169,10 @@ class botcontroller extends Controller
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-                    }else if($userItem->status == 'timeadvertclaim'){
+                    }else if($userItem->status == 'dateadvertclaim'){
                         $userdata = array(
                             'status' => 'weightadvertclaim',
-                            'time' => $update->message->text,
+                            'date' => $update->message->text,
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);

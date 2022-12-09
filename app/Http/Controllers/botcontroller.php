@@ -32,6 +32,23 @@ class botcontroller extends Controller
 Для этого и был создан канал GETLET https://t.me/getlet, в первую очередь для взаимопомощи между земляками из Республики Саха (Якутия), а также как возможность получить дополнительный заработок'
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+            $data2 = [
+                'chat_id' => $update->message->chat->id,
+                'text' => 'Что вы хотите сделать?',
+                'reply_markup' => "{
+                'inline_keyboard':[{
+                    'InlineKeyboardButton':{
+                    'text': 'Посмотреть обьявления'
+                    'callback_data': '1'
+                    }
+                    'InlineKeyboardButton':{
+                    'text': 'Добавить обьявление'
+                    'callback_data': '2'
+                    }
+                }]
+            }"
+            ];
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
         }else if($update->message->text == '/help'){
             $data = [
                 'chat_id' => $update->message->chat->id,

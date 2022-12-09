@@ -35,7 +35,7 @@ class botcontroller extends Controller
             $reply = array('inline_keyboard' => array('Посмотреть обьявления' => array('callback_data' => 1), 'Добавить обьявление' => array('callback_data' => 2)));
             $newReply = array();
             $i = 0;
-            foreach ($newReply as $replyKey => $replyData){
+            foreach ($reply as $replyKey => $replyData){
                 $newReply[$i]['text'] = $replyKey;
                 $newReply[$i]['callback_data'] = $replyData['callback_data'];
                 $i++;

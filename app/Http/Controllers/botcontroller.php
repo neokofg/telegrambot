@@ -69,10 +69,9 @@ class botcontroller extends Controller
 }';
         $decode = json_decode($callback);
         if($decode->callback_query != null){
-            echo json_encode($decode);
+            echo 'ti horosh';
         }else{
             echo 'ti dolbaeb';
-            echo json_encode($decode);
         }
     }
     public function botResponse(){

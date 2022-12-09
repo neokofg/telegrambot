@@ -24,6 +24,10 @@ return new class extends Migration
             $table->string('status');
             $table->string('firstcity')->nullable();
             $table->string('secondcity')->nullable();
+            $table->string('date')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('item')->nullable();
+            $table->string('phone')->nullable();
             $table->string('isstart');
             $table->string('passport');
             $table->timestamps();

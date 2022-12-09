@@ -31,8 +31,21 @@ class botcontroller extends Controller
             ]
         }';
         if (isset($update->callback_query)) {
-            echo 'good';
-        }
+            if($update->callback_query->data == 1){
+                $data2 = [
+                    'chat_id' => $update->callback_query->message->chat->id,
+                    'text' => 'Вы выбрали 1',
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+            }else if($update->callback_query->data == 2){
+                $data2 = [
+                    'chat_id' => $update->callback_query->message->chat->id,
+                    'text' => 'Вы выбрали 2',
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+            }
+
+        }else{
         $decode = json_decode($keyboard);
         if($update->message->text == '/start'){
             $data = [
@@ -69,5 +82,6 @@ class botcontroller extends Controller
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
         }
         return true;
+    }
     }
 }

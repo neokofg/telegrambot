@@ -120,12 +120,14 @@ class botcontroller extends Controller
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                        // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
                         $data = [
                             'chat_id' => $update->message->chat->id,
                             'text' => 'Список',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        // ----
                     }else if($userItem->status == 'secondsendcity'){
                         $userdata = array(
                             'status' => 'both',
@@ -133,12 +135,14 @@ class botcontroller extends Controller
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                        // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
                         $data = [
                             'chat_id' => $update->message->chat->id,
                             'text' => 'Список',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        // ----
                     }else{
                         $data = [
                             'chat_id' => $update->message->chat->id,
@@ -154,13 +158,13 @@ class botcontroller extends Controller
 
         if (isset($update->callback_query)) {
             $user = DB::table('users')->where('userid','=',$update->callback_query->message->from->id)->get();
-            if($update->callback_query->data == 1){
+            if($update->callback_query->data == 2){
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
-                    'text' => 'Вы выбрали 1',
+                    'text' => 'Добавить обьявление',
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-            }else if($update->callback_query->data == 2){
+            }else if($update->callback_query->data == 1){
                 $keyboard =
                     '{
                     "inline_keyboard": [[

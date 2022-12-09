@@ -141,7 +141,8 @@ class botcontroller extends Controller
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Откуда:'. $parcel->firstcity . '
+                                'text' => '
+                                Откуда:'. $parcel->firstcity . '
                                 Куда:'. $parcel->secondcity . '
                                 Дата:'. $parcel->date . '
                                 Вес:'. $parcel->weight .'
@@ -164,7 +165,8 @@ class botcontroller extends Controller
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Откуда:'. $parcel->firstcity . '
+                                'text' => '
+                                Откуда:'. $parcel->firstcity . '
                                 Куда:'. $parcel->secondcity . '
                                 Дата:'. $parcel->date . '
                                 Вес:'. $parcel->weight .'
@@ -186,7 +188,7 @@ class botcontroller extends Controller
                             'chat_id' => $update->message->chat->id,
                             'text' => 'Куда вы хотите взять посылку?',
                             'reply_to_message_id' => $update->message->message_id,
-                        ];      
+                        ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                     }else if($userItem->status == 'secondadvertclaimcity'){
                         $userdata = array(

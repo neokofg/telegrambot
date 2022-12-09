@@ -116,7 +116,7 @@ class botcontroller extends Controller
                     }else if($userItem->status == 'secondclaimcity'){
                         $userdata = array(
                             'status' => 'both',
-                            'firstcity' => $update->message->text,
+                            'secondcity' => $update->message->text,
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
@@ -129,7 +129,7 @@ class botcontroller extends Controller
                     }else if($userItem->status == 'secondsendcity'){
                         $userdata = array(
                             'status' => 'both',
-                            'firstcity' => $update->message->text,
+                            'secondcity' => $update->message->text,
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);

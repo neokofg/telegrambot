@@ -32,21 +32,6 @@ class botcontroller extends Controller
             ]
         }';
         $decode = json_decode($keyboard);
-        if($update->callback_query->data == 1){
-            $data = [
-                'chat_id' => $update->message->chat->id,
-                'text' => 'Вы выбрали Посмотреть обьявления'
-            ];
-            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-            return true;
-        }else if($update->callback_query->data == 2){
-            $data = [
-                'chat_id' => $update->message->chat->id,
-                'text' => 'Вы выбрали Добавить обьявление'
-            ];
-            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-            return true;
-        }
         if($update->message->text == '/start'){
             $data = [
                 'chat_id' => $update->message->chat->id,
@@ -72,6 +57,18 @@ class botcontroller extends Controller
             $data = [
                 'chat_id' => $update->message->chat->id,
                 'text' => 'КАНЧА'
+            ];
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+        }else if($update->callback_query->data == 1){
+            $data = [
+                'chat_id' => $update->message->chat->id,
+                'text' => 'Вы выбрали Посмотреть обьявления'
+            ];
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+        }else if($update->callback_query->data == 2){
+            $data = [
+                'chat_id' => $update->message->chat->id,
+                'text' => 'Вы выбрали Добавить обьявление'
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
         }else{

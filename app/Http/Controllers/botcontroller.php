@@ -304,7 +304,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Напишите описание вашей посылки.'.PHP_EOL.' Пример: телефон/ пакет с одеждой/ багаж',
+                            'text' => 'Напишите описание вашей посылки.'.PHP_EOL.'Пример: телефон/ пакет с одеждой/ багаж',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));

@@ -17,19 +17,7 @@ class botcontroller extends Controller
     }
     public function botResponse(){
         $result = file_get_contents('php://input');
-        $update = json_decode($result, true);
-        $keyboard = '{
-            "inline_keyboard": [[
-                {
-                    "text": "Посмотреть обьявления",
-                    "callback_data": "1"
-                },
-                {
-                    "text": "Добавить обьявление",
-                    "callback_data": "2"
-                }]
-            ]
-        }';
+        $update = json_decode($result);
         if (isset($update->callback_query)) {
             if($update->callback_query->data == 1){
                 $data2 = [
@@ -47,6 +35,19 @@ class botcontroller extends Controller
 
         }
         if (isset($update->message)) {
+            $keyboard =
+            '{
+                "inline_keyboard": [[
+                    {
+                        "text": "Посмотреть обьявления",
+                        "callback_data": "1"
+                    },
+                    {
+                        "text": "Добавить обьявление",
+                        "callback_data": "2"
+                    }]
+                ]
+            }';
             $decode = json_decode($keyboard);
             if($update->message->text == '/start'){
                 $data = [

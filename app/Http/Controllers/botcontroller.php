@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class botcontroller extends Controller
@@ -18,6 +19,7 @@ class botcontroller extends Controller
     public function botResponse(){
         $result = file_get_contents('php://input');
         $update = json_decode($result);
+        $user = DB::table('users')->where('userid','=',$update->message->from->id)->get();
         if (isset($update->callback_query)) {
             if($update->callback_query->data == 1){
                 $data2 = [
@@ -77,20 +79,49 @@ class botcontroller extends Controller
             }';
             $decode = json_decode($keyboard);
             if($update->message->text == '/start'){
-                $data = [
-                    'chat_id' => $update->message->chat->id,
-                    'reply_to_message_id' => $update->message->message_id,
-                    'text' => 'Все мы попадали в ситуацию, когда срочно нужно отправить документы в другой город. Почтой России очень долго, другими службами дорого, а ещё нужно, чтобы документы прибыли на следующий день. Особенно в нынешнее неспокойное время.
+                if($user == '[]'){
+                    $userdata = array(
+                        'userid' => $update->message->from->id,
+                        'chatid' => $update->message->chat->id,
+                        'first_name' => $update->message->from->first_name,
+                        'last_name' => $update->message->from->last_name,
+                        'username' => '@'.$update->message->from->username,
+                        'language_code' => $update->message->from->language_code,
+                        'status' => 'started',
+                        'isstart' => 'true',
+                        'passport' => 'false',
+                        'created_at' =>  date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    );
+                    DB::table('users')->insert($userdata);
+                    $data = [
+                        'chat_id' => $update->message->chat->id,
+                        'reply_to_message_id' => $update->message->message_id,
+                        'text' => 'Все мы попадали в ситуацию, когда срочно нужно отправить документы в другой город. Почтой России очень долго, другими службами дорого, а ещё нужно, чтобы документы прибыли на следующий день. Особенно в нынешнее неспокойное время.
 
 Для этого и был создан канал GETLET https://t.me/getlet, в первую очередь для взаимопомощи между земляками из Республики Саха (Якутия), а также как возможность получить дополнительный заработок'
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-                $data2 = [
-                    'chat_id' => $update->message->chat->id,
-                    'text' => 'Что вы хотите сделать?',
-                    'reply_markup' => json_encode($decode)
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                    ];
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                    $data2 = [
+                        'chat_id' => $update->message->chat->id,
+                        'text' => 'Что вы хотите сделать?',
+                        'reply_markup' => json_encode($decode)
+                    ];
+                    $userdata = array('status' => 'started', "updated_at" => date('Y-m-d H:i:s'));
+                    DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                }else{
+                    foreach ($user as $userItem){
+                        if($userItem->isstart == 'true'){
+                            $data2 = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Что вы хотите сделать?',
+                                'reply_markup' => json_encode($decode)
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                        }
+                    }
+                }
             }else if($update->message->text == '/help'){
                 $data = [
                     'chat_id' => $update->message->chat->id,

@@ -123,9 +123,9 @@ class botcontroller extends Controller
             }else if($update->callback_query->data == 3){
                 $userdata = array(
                     'status' => 'firstsendcity',
-                    'updated_at' => date('Y-m-d H:i:s')
+                    "updated_at" => date('Y-m-d H:i:s')
                 );
-                DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
+                DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
                     'text' => 'Город отправления',
@@ -134,9 +134,9 @@ class botcontroller extends Controller
             }else if($update->callback_query->data == 4){
                 $userdata = array(
                     'status' => 'firstclaimcity',
-                    'updated_at' => date('Y-m-d H:i:s')
+                    "updated_at" => date('Y-m-d H:i:s')
                 );
-                DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);
+                DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
                     'text' => 'Город отправления',

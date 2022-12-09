@@ -369,6 +369,7 @@ class botcontroller extends Controller
                 $decode = json_decode($keyboard);
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
+                    'message_id' => $update->callback_query->message->message_id,
                     'text' => 'Выберите тип обьявления',
                     'reply_markup' => json_encode($decode)
                 ];
@@ -390,6 +391,7 @@ class botcontroller extends Controller
                 $decode = json_decode($keyboard);
                 $data2 = [
                     'chat_id' => $update->callback_query->from->id,
+                    'message_id' => $update->callback_query->message->message_id,
                     'text' => 'Выберите тип обьявления',
                     'reply_markup' => json_encode($decode)
                 ];

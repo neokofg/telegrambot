@@ -257,7 +257,7 @@ class botcontroller extends Controller
         // callback ->
 
         if (isset($update->callback_query)) {
-            $user = DB::table('users')->where('userid','=',$update->callback_query->message->from->id)->get();
+            $user = DB::table('users')->where('userid','=',$update->callback_query->from->id)->get();
             if($update->callback_query->data == 2){
                 $keyboard =
                     '{

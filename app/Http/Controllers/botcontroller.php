@@ -141,8 +141,7 @@ class botcontroller extends Controller
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => '
-                                    Откуда:'. $parcel->firstcity .
+                                'text' => 'Откуда:'. $parcel->firstcity .
                                     '
                                     Куда:'. $parcel->secondcity .
                                     '
@@ -171,18 +170,17 @@ class botcontroller extends Controller
                         foreach ($parcels as $parcel){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => '
-                                    Откуда:'. $parcel->firstcity .
+                                'text' => 'Откуда: '. $parcel->firstcity .
                                     '
-                                    Куда:'. $parcel->secondcity .
+                                    Куда: '. $parcel->secondcity .
                                     '
-                                    Дата:'. $parcel->date .
+                                    Дата: '. $parcel->date .
                                     '
-                                    Вес:'. $parcel->weight .
+                                    Вес: '. $parcel->weight .
                                     '
-                                    Что:'. $parcel->item.
+                                    Что: '. $parcel->item.
                                     '
-                                    Номер:'. $parcel->phone.
+                                    Номер: '. $parcel->phone.
                                     '
                                     '. $parcel->username,
                             ];

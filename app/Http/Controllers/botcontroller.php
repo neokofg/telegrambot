@@ -594,16 +594,28 @@ class botcontroller extends Controller
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
             }else if($update->callback_query->data == 11){
                 foreach ($parceluser as $parcel){
+                    $keyboard =
+                        '{
+                            "inline_keyboard": [[
+                                {
+                                    "text": "Удалить",
+                                    "callback_data": "12"
+                                }]
+                            ]
+                        }';
+                    $decode = json_decode($keyboard);
                     if($parcel->type == 'claim'){
                         $data2 = [
                             'chat_id' => $update->callback_query->from->id,
                             'text' => 'Откуда: '. $parcel->firstcity . PHP_EOL .'Куда: '. $parcel->secondcity . PHP_EOL .'Дата: '. $parcel->date . PHP_EOL .'Вес: '. $parcel->weight . PHP_EOL .'Что: '. $parcel->item . PHP_EOL .'Номер: '. $parcel->phone . PHP_EOL .''. $parcel->username,
+                            'reply_markup' => json_encode($decode)
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                     }else{
                         $data2 = [
                             'chat_id' => $update->callback_query->from->id,
                             'text' => 'Откуда: '. $parcel->firstcity . PHP_EOL .'Куда: '. $parcel->secondcity . PHP_EOL .'Вес: '. $parcel->weight . PHP_EOL .'Что: '. $parcel->item . PHP_EOL .'Номер: '. $parcel->phone . PHP_EOL .''. $parcel->username,
+                            'reply_markup' => json_encode($decode)
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                     }

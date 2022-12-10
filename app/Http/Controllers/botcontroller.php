@@ -18,7 +18,8 @@ class botcontroller extends Controller
     }
     public function testBOT(){
         $parceluser = DB::table('parcels')->where('userid','=',864640107)->get();
-        echo $parceluser->count();
+        $parcels = DB::table('parcels')->get();
+        echo $parcels->count();
         for ($i = 0;$i<=$parceluser->count();$i++){
             echo ''. 12 .' '. $i .'';
         }
@@ -637,8 +638,9 @@ class botcontroller extends Controller
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }else{
-                for ($i = 0;$i<=$parceluser->count();$i++){
-                    if($update->callback_query->data == 12 .' '. $i){
+                $parcels = DB::table('parcels')->get();
+                for ($i = 0;$i<=$parcels->count();$i++){
+                    if($update->callback_query->data == ''. 12 .' '. $i .''){
                         $data2 = [
                             'chat_id' => $update->callback_query->from->id,
                             'text' => 'Вы удалили кое что',

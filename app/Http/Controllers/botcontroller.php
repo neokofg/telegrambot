@@ -251,7 +251,7 @@ class botcontroller extends Controller
                         if ($validator->fails()) {
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Введите дату по формату!'.PHP_EOL.'Формат: дд.мм.гггг',
+                                'text' => 'Дата должна быть по формату, либо не позднее сегодняшнего дня!'.PHP_EOL.'Формат: дд.мм.гггг',
                                 'reply_to_message_id' => $update->message->message_id,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));

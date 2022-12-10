@@ -393,18 +393,46 @@ class botcontroller extends Controller
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                     }else if($userItem->status == 'weightadvertsend'){
-                        $userdata = array(
-                            'status' => 'descriptionadvertsend',
-                            'weight' =>  $update->message->text,
-                            "updated_at" => date('Y-m-d H:i:s')
-                        );
-                        DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
-                        $data = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Напишите описание вашей посылки.'.PHP_EOL.'Пример: телефон/ пакет с одеждой/ багаж',
-                            'reply_to_message_id' => $update->message->message_id,
+                        $input = [
+                            'weight' => $update->message->text
                         ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        $validator = Validator::make($input, [
+                            'weight' => 'starts_with:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50|ends_with:кг'
+                        ]);
+                        if($update->message->text == 0 OR $update->message->text == '0 кг') {
+                            $userdata = array(
+                                'status' => 'descriptionadvertsend',
+                                'weight' =>  'Документы',
+                                "updated_at" => date('Y-m-d H:i:s')
+                            );
+                            DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Напишите описание вашей посылки.'.PHP_EOL.'Пример: телефон/ пакет с одеждой/ багаж',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }else if($validator->fails()){
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Введите вес в кг!'.PHP_EOL.'Формат: вес кг',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }else{
+                            $userdata = array(
+                                'status' => 'descriptionadvertsend',
+                                'weight' =>  $update->message->text,
+                                "updated_at" => date('Y-m-d H:i:s')
+                            );
+                            DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Напишите описание вашей посылки.'.PHP_EOL.'Пример: телефон/ пакет с одеждой/ багаж',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }
                     }else if($userItem->status == 'descriptionadvertsend'){
                         $userdata = array(
                             'status' => 'phoneadvertsend',

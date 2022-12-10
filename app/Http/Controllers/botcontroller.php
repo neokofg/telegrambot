@@ -593,6 +593,12 @@ class botcontroller extends Controller
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
             }else if($update->callback_query->data == 11){
+                $data = [
+                    'chat_id' => $update->callback_query->from->id,
+                    'message_id' => $update->callback_query->message->message_id,
+                    'text' => 'Вот список ваших обьявлений:',
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data));
                 foreach ($parceluser as $parcel){
                     $keyboard =
                         '{
@@ -625,16 +631,6 @@ class botcontroller extends Controller
                     'text' => 'Если хотите сделать что-то еще, то напишите /start',
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-            }
-            for ($i = 0;$i<=$parcel->count();$i++){
-                if($update->callback_query->data == '12 '.$i){
-                    $data2 = [
-                        'chat_id' => $update->callback_query->from->id,
-                        'message_id' => $update->callback_query->message->message_id,
-                        'text' => 'Вы удалили кое что',
-                    ];
-                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-                }
             }
         }
     }

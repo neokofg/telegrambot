@@ -641,15 +641,13 @@ class botcontroller extends Controller
                 $callback = $update->callback_query->data;
                 $callbackpieces = explode(" ", $callback);
                 if($callbackpieces[0] == 12){
-                    if($update->callback_query->data == ''. 12 .' '. $callbackpieces[1] .''){
-                        DB::table('parcels')->where('id','=',$check)->delete();
-                        $data2 = [
-                            'chat_id' => $update->callback_query->from->id,
-                            'message_id' => $update->callback_query->message->message_id,
-                            'text' => 'Вы удалили это обьявление',
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
-                    }
+                    DB::table('parcels')->where('id','=',$callbackpieces[1])->delete();
+                    $data2 = [
+                        'chat_id' => $update->callback_query->from->id,
+                        'message_id' => $update->callback_query->message->message_id,
+                        'text' => 'Вы удалили это обьявление',
+                    ];
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
                 }
             }
         }

@@ -638,7 +638,7 @@ class botcontroller extends Controller
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }else{
-                foreach (range(0,INF) as $check){
+                foreach (range(0,99999) as $check){
                     if($update->callback_query->data == ''. 12 .' '. $check .''){
                         DB::table('parcels')->where('id','=',$check)->delete();
                         $data2 = [

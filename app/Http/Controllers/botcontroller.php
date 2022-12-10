@@ -246,7 +246,7 @@ class botcontroller extends Controller
                             'date' => $update->message->text
                         ];
                         $validator = Validator::make($input, [
-                            'date' => 'date_format:d.m.Y'
+                            'date' => 'date_format:d.m.Y|after:today'
                         ]);
                         if ($validator->fails()) {
                             $data = [

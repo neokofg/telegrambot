@@ -17,6 +17,7 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function testBOT(){
+
     }
     public function botResponse(){
         $result = file_get_contents('php://input');
@@ -632,7 +633,7 @@ class botcontroller extends Controller
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }else{
-                for ($i = 0;$i<=$parcel->count();$i++){
+                for ($i = 0;$i<=$parceluser->count();$i++){
                     if($update->callback_query->data == 12 .' '. $i){
                         $data2 = [
                             'chat_id' => $update->callback_query->from->id,

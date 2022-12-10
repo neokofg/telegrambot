@@ -599,7 +599,7 @@ class botcontroller extends Controller
                             "inline_keyboard": [[
                                 {
                                     "text": "Удалить",
-                                    "callback_data": "12"
+                                    "callback_data": "12 '.$parcel->id.'"
                                 }]
                             ]
                         }';

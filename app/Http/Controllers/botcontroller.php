@@ -180,7 +180,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
                         $parcels = DB::table('parcels')->where('type','=','claim')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=',  Str::ucfirst($update->message->text))->get();
-                        if($parcels = '[]'){
+                        if($parcels == '[]'){
                             $data2 = [
                                 'chat_id' => $update->message->chat->id,
                                 'text' => 'Таких обьявлений нету'.PHP_EOL.'Если хотите сделать что-то еще, то напишите /start',
@@ -210,7 +210,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
                         $parcels = DB::table('parcels')->where('type','=','send')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=',  Str::ucfirst($update->message->text))->get();
-                        if($parcels = '[]'){
+                        if($parcels == '[]'){
                             $data2 = [
                                 'chat_id' => $update->message->chat->id,
                                 'text' => 'Таких обьявлений нету'.PHP_EOL.'Если хотите сделать что-то еще, то напишите /start',

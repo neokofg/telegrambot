@@ -220,7 +220,7 @@ class botcontroller extends Controller
                             foreach ($parcels as $parcel){
                                 $data = [
                                     'chat_id' => $update->message->chat->id,
-                                    'text' => 'Откуда: '. $parcel->firstcity . PHP_EOL .'Куда: '. $parcel->secondcity . PHP_EOL .'Вес: '. $parcel->weight . PHP_EOL .'Что: '. $parcel->item . PHP_EOL .'Номер: '. $parcel->phone . PHP_EOL .''. $parcel->username,
+                                    'text' => 'Откуда: '. $parcel->firstcity . PHP_EOL .'Куда: '. $parcel->secondcity . PHP_EOL .'Вес: '. $parcel->weight . PHP_EOL .'Что: '. $parcel->item . PHP_EOL .'Цена: '. $parcel->price . PHP_EOL .'Номер: '. $parcel->phone . PHP_EOL .''. $parcel->username,
                                 ];
                                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                             }

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('weight')->nullable();
             $table->string('item')->nullable();
             $table->string('phone')->nullable();
+            $table->string('price')->nullable();
             $table->string('isstart');
             $table->string('passport');
             $table->timestamps();

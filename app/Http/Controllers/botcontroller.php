@@ -451,17 +451,45 @@ class botcontroller extends Controller
                         }
                     }else if($userItem->status == 'descriptionadvertsend'){
                         $userdata = array(
-                            'status' => 'phoneadvertsend',
+                            'status' => 'priceadvertsend',
                             'item' =>  $update->message->text,
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Напишите ваш контактный телефон'.PHP_EOL.'Пример: +79249683023',
+                            'text' => 'Укажите цену'.PHP_EOL.'Пример: 1000 рублей',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                    }else if($userItem->status == 'priceadvertsend'){
+                        $input = [
+                            'price' => $update->message->text
+                        ];
+                        $validator = Validator::make($input, [
+                            'price' => 'starts_with:1,2,3,4,5,6,7,8,9|ends_with:рублей,руб'
+                        ]);
+                        if($validator->fails()){
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Укажите цену по формату'.PHP_EOL.'Формат: 1000 рублей',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }else{
+                            $userdata = array(
+                                'status' => 'phoneadvertsend',
+                                'price' =>  $update->message->text,
+                                "updated_at" => date('Y-m-d H:i:s')
+                            );
+                            DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Напишите ваш контактный телефон'.PHP_EOL.'Пример: +79249683023',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }
                     }else if($userItem->status == 'phoneadvertsend'){
                         $keyboard =
                             '{
@@ -499,7 +527,7 @@ class botcontroller extends Controller
                             DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Вы хотите отправить посылку'.PHP_EOL.'Откуда: '. $userItem->firstcity .PHP_EOL.'Куда: '.$userItem->secondcity.PHP_EOL.'Вес: '.$userItem->weight.PHP_EOL.'Что: '.$userItem->item.PHP_EOL.'Номер: '.$update->message->text.PHP_EOL.''.$userItem->username,
+                                'text' => 'Вы хотите отправить посылку'.PHP_EOL.'Откуда: '. $userItem->firstcity .PHP_EOL.'Куда: '.$userItem->secondcity.PHP_EOL.'Вес: '.$userItem->weight.PHP_EOL.'Что: '.$userItem->item.PHP_EOL.'Цена: '.$userItem->price.PHP_EOL.'Номер: '.$update->message->text.PHP_EOL.''.$userItem->username,
                                 'reply_to_message_id' => $update->message->message_id,
                                 'reply_markup' => json_encode($decode)
                             ];
@@ -674,6 +702,7 @@ class botcontroller extends Controller
                         'weight' => $userItem->weight,
                         'item'=> $userItem->item,
                         'phone'=> $userItem->phone,
+                        'price' => $userItem->price,
                         'username' =>$userItem->username,
                         'type' => 'send',
                         'created_at' =>  date('Y-m-d H:i:s'),
@@ -688,6 +717,7 @@ class botcontroller extends Controller
                         'weight' => 'null',
                         'item' => 'null',
                         'phone' => 'null',
+                        'price' => 'null',
                         "updated_at" => date('Y-m-d H:i:s')
                     );
                     DB::table('users')->where('userid','=',$update->callback_query->from->id)->update($userdata);

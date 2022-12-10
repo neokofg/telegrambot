@@ -241,11 +241,13 @@ class botcontroller extends Controller
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                     }else if($userItem->status == 'dateadvertclaim'){
-                        function validateDate($date, $format = 'd-m-y'){
-                            $d = DateTime::createFromFormat($format, $date);
-                            return $d && $d->format($format) === $date;
-                        }
-                        if(var_dump(validateDate($update->message->text))){
+                        $input = [
+                            'date' => $update->message->text
+                        ];
+                        $validator = Validator::make($input, [
+                            'date' => 'date_format:d-m-y'
+                        ]);
+                        if($validator){
                             $userdata = array(
                                 'status' => 'weightadvertclaim',
                                 'date' => $update->message->text,
@@ -258,13 +260,14 @@ class botcontroller extends Controller
                                 'reply_to_message_id' => $update->message->message_id,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }else{
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Введите дату по формату!'.PHP_EOL.'Формат: дд.мм.гггг',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         }
-                        $data = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Введите дату по формату!'.PHP_EOL.'Формат: дд.мм.гггг',
-                            'reply_to_message_id' => $update->message->message_id,
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                     }else if($userItem->status == 'weightadvertclaim'){
                         $userdata = array(
                             'status' => 'itemadvertclaim',

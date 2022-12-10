@@ -17,11 +17,11 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function testBOT(){
-        $parceluser = DB::table('parcels')->where('userid','=',864640107)->get();
-        $parcels = DB::table('parcels')->get();
-        echo $parcels->count();
-        for ($i = 0;$i<=$parceluser->count();$i++){
-            echo ''. 12 .' '. $i .'';
+        foreach (range(0,INF) as $check){
+            echo $check;
+            if($check == 10){
+                break;
+            }
         }
     }
     public function botResponse(){
@@ -638,7 +638,6 @@ class botcontroller extends Controller
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }else{
-                $parcels = DB::table('parcels')->get();
                 foreach (range(0,INF) as $check){
                     if($update->callback_query->data == ''. 12 .' '. $check .''){
                         DB::table('parcels')->where('id','=',$check)->delete();

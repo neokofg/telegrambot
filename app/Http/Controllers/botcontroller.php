@@ -274,7 +274,7 @@ class botcontroller extends Controller
                             'weight' => $update->message->text
                         ];
                         $validator = Validator::make($input, [
-                            'weight' => 'starts_with:integer|ends_with:кг'
+                            'weight' => 'integer|ends_with:кг'
                         ]);
                         if ($validator->fails()) {
                             $data = [

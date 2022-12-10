@@ -52,9 +52,7 @@ class botcontroller extends Controller
                     {
                         "text": "Добавить обьявление",
                         "callback_data": "2"
-                    }]
-                ]
-                "inline_keyboard": [[
+                    },
                     {
                         "text": "Мои обьявления",
                         "callback_data": "11"

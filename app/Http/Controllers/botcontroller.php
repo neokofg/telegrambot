@@ -283,6 +283,19 @@ class botcontroller extends Controller
                                 'reply_to_message_id' => $update->message->message_id,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }else if($update->message->text == 0 OR $update->message->text == '0 кг'){
+                            $userdata = array(
+                                'status' => 'itemadvertclaim',
+                                'weight' => 'Документы',
+                                "updated_at" => date('Y-m-d H:i:s')
+                            );
+                            DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Что можете взять с собой?'.PHP_EOL.'Пример: документы, мелкие посылки, багаж',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         }else{
                             $userdata = array(
                                 'status' => 'itemadvertclaim',

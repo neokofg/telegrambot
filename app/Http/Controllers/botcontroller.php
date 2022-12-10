@@ -17,7 +17,11 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function testBOT(){
-
+        $parceluser = DB::table('parcels')->where('userid','=',864640107)->get();
+        echo $parceluser->count();
+        for ($i = 0;$i<=$parceluser->count();$i++){
+            echo ''. 12 .' '. $i .'';
+        }
     }
     public function botResponse(){
         $result = file_get_contents('php://input');

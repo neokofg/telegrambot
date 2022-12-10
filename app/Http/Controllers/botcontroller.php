@@ -26,8 +26,10 @@ class botcontroller extends Controller
 
         if (isset($update->message)) {
             $user = DB::table('users')->where('userid','=',$update->message->from->id)->get();
-            $keyboard =
-            '{
+            $parceluser = DB::table('parcels')->where('userid','=',$update->message->from->id)->get();
+            if($parceluser == '[]'){
+                $keyboard =
+                    '{
                 "inline_keyboard": [[
                     {
                         "text": "Посмотреть обьявления",
@@ -39,6 +41,26 @@ class botcontroller extends Controller
                     }]
                 ]
             }';
+            }else{
+                $keyboard =
+                    '{
+                "inline_keyboard": [[
+                    {
+                        "text": "Посмотреть обьявления",
+                        "callback_data": "1"
+                    },
+                    {
+                        "text": "Добавить обьявление",
+                        "callback_data": "2"
+                    },
+                    {
+                        "text": "Мои обьявления",
+                        "callback_data": "3"
+                    }]
+                ]
+            }';
+            }
+
             $decode = json_decode($keyboard);
             if($update->message->text == '/start'){
                 if($user == '[]'){

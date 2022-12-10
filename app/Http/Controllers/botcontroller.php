@@ -17,7 +17,7 @@ class botcontroller extends Controller
         return(string) $result->getBody();
     }
     public function testBOT(){
-        foreach (range(0, 999999999) as $check){
+        foreach (range(0, 99999) as $check){
             echo $check;
             if($check == 10){
                 break;

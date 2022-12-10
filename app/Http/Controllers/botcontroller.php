@@ -180,18 +180,26 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
                         $parcels = DB::table('parcels')->where('type','=','claim')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=',  Str::ucfirst($update->message->text))->get();
-                        foreach ($parcels as $parcel){
-                            $data = [
+                        if($parcels = '[]'){
+                            $data2 = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Откуда: '. $parcel->firstcity . PHP_EOL .'Куда: '. $parcel->secondcity . PHP_EOL .'Дата: '. $parcel->date . PHP_EOL .'Вес: '. $parcel->weight . PHP_EOL .'Что: '. $parcel->item . PHP_EOL .'Номер: '. $parcel->phone . PHP_EOL .''. $parcel->username,
+                                'text' => 'Таких обьявлений нету'.PHP_EOL.'Если хотите сделать что-то еще, то напишите /start',
                             ];
-                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                        }else{
+                            foreach ($parcels as $parcel){
+                                $data = [
+                                    'chat_id' => $update->message->chat->id,
+                                    'text' => 'Откуда: '. $parcel->firstcity . PHP_EOL .'Куда: '. $parcel->secondcity . PHP_EOL .'Дата: '. $parcel->date . PHP_EOL .'Вес: '. $parcel->weight . PHP_EOL .'Что: '. $parcel->item . PHP_EOL .'Номер: '. $parcel->phone . PHP_EOL .''. $parcel->username,
+                                ];
+                                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                            }
+                            $data2 = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Если хотите сделать что-то еще, то напишите /start',
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                         }
-                        $data2 = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Если хотите сделать что-то еще, то напишите /start',
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                         // ----
                     }else if($userItem->status == 'secondsendcity'){
                         $userdata = array(
@@ -202,18 +210,26 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         // ПОМЕНЯТЬ НА НОРМАЛЬНЫЙ СПИСОК----
                         $parcels = DB::table('parcels')->where('type','=','send')->where('firstcity', '=', $userItem->firstcity)->where('secondcity', '=',  Str::ucfirst($update->message->text))->get();
-                        foreach ($parcels as $parcel){
-                            $data = [
+                        if($parcels = '[]'){
+                            $data2 = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Откуда: '. $parcel->firstcity . PHP_EOL .'Куда: '. $parcel->secondcity . PHP_EOL .'Вес: '. $parcel->weight . PHP_EOL .'Что: '. $parcel->item . PHP_EOL .'Номер: '. $parcel->phone . PHP_EOL .''. $parcel->username,
+                                'text' => 'Таких обьявлений нету'.PHP_EOL.'Если хотите сделать что-то еще, то напишите /start',
                             ];
-                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                        }else{
+                            foreach ($parcels as $parcel){
+                                $data = [
+                                    'chat_id' => $update->message->chat->id,
+                                    'text' => 'Откуда: '. $parcel->firstcity . PHP_EOL .'Куда: '. $parcel->secondcity . PHP_EOL .'Вес: '. $parcel->weight . PHP_EOL .'Что: '. $parcel->item . PHP_EOL .'Номер: '. $parcel->phone . PHP_EOL .''. $parcel->username,
+                                ];
+                                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                            }
+                            $data2 = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Если хотите сделать что-то еще, то напишите /start',
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                         }
-                        $data2 = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Если хотите сделать что-то еще, то напишите /start',
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                         // ----
                     }else if($userItem->status == 'firstadvertclaimcity'){
                         $userdata = array(

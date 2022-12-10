@@ -638,8 +638,10 @@ class botcontroller extends Controller
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }else{
-                foreach (range(0,99999) as $check){
-                    if($update->callback_query->data == ''. 12 .' '. $check .''){
+                $callback = $update->callback_query->data;
+                $callbackpieces = explode(" ", $callback);
+                if($callbackpieces[0] == 12){
+                    if($update->callback_query->data == ''. 12 .' '. $callbackpieces[1] .''){
                         DB::table('parcels')->where('id','=',$check)->delete();
                         $data2 = [
                             'chat_id' => $update->callback_query->from->id,
@@ -647,7 +649,6 @@ class botcontroller extends Controller
                             'text' => 'Вы удалили это обьявление',
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
-                        break;
                     }
                 }
             }

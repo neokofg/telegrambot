@@ -248,7 +248,14 @@ class botcontroller extends Controller
                         $validator = Validator::make($input, [
                             'date' => 'date_format:d-m-y'
                         ]);
-                        if($validator){
+                        if ($validator->fails()) {
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Введите дату по формату!'.PHP_EOL.'Формат: дд.мм.гггг',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }else{
                             $userdata = array(
                                 'status' => 'weightadvertclaim',
                                 'date' => $update->message->text,
@@ -258,13 +265,6 @@ class botcontroller extends Controller
                             $data = [
                                 'chat_id' => $update->message->chat->id,
                                 'text' => 'Посылку с каким весом вы можете взять с собой?'.PHP_EOL.'Введите число в кг, а если только документы, то введите 0',
-                                'reply_to_message_id' => $update->message->message_id,
-                            ];
-                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-                        }else{
-                            $data = [
-                                'chat_id' => $update->message->chat->id,
-                                'text' => 'Введите дату по формату!'.PHP_EOL.'Формат: дд.мм.гггг',
                                 'reply_to_message_id' => $update->message->message_id,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));

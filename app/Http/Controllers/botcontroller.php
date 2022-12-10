@@ -461,19 +461,34 @@ class botcontroller extends Controller
                                 ]
                             }';
                         $decode = json_decode($keyboard);
-                        $userdata = array(
-                            'status' => 'advertsendall',
-                            'phone' =>  $update->message->text,
-                            "updated_at" => date('Y-m-d H:i:s')
-                        );
-                        DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
-                        $data = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Вы хотите отправить посылку'.PHP_EOL.'Откуда: '. $userItem->firstcity .PHP_EOL.'Куда: '.$userItem->secondcity.PHP_EOL.'Вес: '.$userItem->weight.PHP_EOL.'Что: '.$userItem->item.PHP_EOL.'Номер: '.$update->message->text.PHP_EOL.''.$userItem->username,
-                            'reply_to_message_id' => $update->message->message_id,
-                            'reply_markup' => json_encode($decode)
+                        $input = [
+                            'phone' => $update->message->text
                         ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        $validator = Validator::make($input, [
+                            'phone' => 'starts_with:+'
+                        ]);
+                        if($validator->fails()){
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Введите телефон по формату!'.PHP_EOL.'Формат: +79249683023',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }else{
+                            $userdata = array(
+                                'status' => 'advertsendall',
+                                'phone' =>  $update->message->text,
+                                "updated_at" => date('Y-m-d H:i:s')
+                            );
+                            DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Вы хотите отправить посылку'.PHP_EOL.'Откуда: '. $userItem->firstcity .PHP_EOL.'Куда: '.$userItem->secondcity.PHP_EOL.'Вес: '.$userItem->weight.PHP_EOL.'Что: '.$userItem->item.PHP_EOL.'Номер: '.$update->message->text.PHP_EOL.''.$userItem->username,
+                                'reply_to_message_id' => $update->message->message_id,
+                                'reply_markup' => json_encode($decode)
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }
                     }else{
                         $data = [
                             'chat_id' => $update->message->chat->id,

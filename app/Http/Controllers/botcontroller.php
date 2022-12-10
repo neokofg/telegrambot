@@ -158,6 +158,11 @@ class botcontroller extends Controller
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         }
+                        $data2 = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Если хотите сделать что-то еще, то напишите /start',
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                         // ----
                     }else if($userItem->status == 'secondsendcity'){
                         $userdata = array(
@@ -175,6 +180,11 @@ class botcontroller extends Controller
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         }
+                        $data2 = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Если хотите сделать что-то еще, то напишите /start',
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                         // ----
                     }else if($userItem->status == 'firstadvertclaimcity'){
                         $userdata = array(
@@ -211,7 +221,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Посылку с каким весом вы можете взять с собой?'.PHP_EOL.' Введите число в кг, а если только документы, то введите 0',
+                            'text' => 'Посылку с каким весом вы можете взять с собой?'.PHP_EOL.'Введите число в кг, а если только документы, то введите 0',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));

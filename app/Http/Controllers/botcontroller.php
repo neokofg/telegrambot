@@ -12,18 +12,9 @@ use SebastianBergmann\CodeCoverage\Report\PHP;
 
 class botcontroller extends Controller
 {
-    public function botControl($route = '', $params = [], $method = 'POST'){
-        $response = new Client(['base_uri' => 'https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/setwebhook?url=https://mpit14.ru/response']);
-        $result = $response->request($method, $route, $params);
-        return(string) $result->getBody();
+    public function botControl(){
     }
     public function testBOT(){
-        foreach (range(0, 99999) as $check){
-            echo $check;
-            if($check == 10){
-                break;
-            }
-        }
     }
     public function botResponse(){
         $result = file_get_contents('php://input');
@@ -536,7 +527,7 @@ class botcontroller extends Controller
                     }else{
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Я вас не понял',
+                            'text' => 'Если хотите сделать что-то еще, то напишите /start',
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                     }

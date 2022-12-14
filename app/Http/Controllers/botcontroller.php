@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use SebastianBergmann\CodeCoverage\Report\PHP;
+
+function encodeURIComponent($str) {
+    $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
+    return strtr(rawurlencode($str), $revert);
+}
 
 class botcontroller extends Controller
 {
@@ -128,21 +132,21 @@ class botcontroller extends Controller
                                 "updated_at" => date('Y-m-d H:i:s')
                             );
                             DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
-                            $publickey = '-----BEGIN PUBLIC KEY-----
-                            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05FL3StCKstAZgOh4Bk1
-                            QEodBenu+BM1jwbYPWi0wyzLwrdglUgP3LnGQJk+jOoHaGtNbHJb5ejJZ7ETLkJY
-                            /dsmsi52+l2QE6CzosBPsbY1M3MUrVJvDUQZFWAs3BO+Y/2CimNNcGC0HQn1AEYO
-                            soNrZN1GqdIjQlNCfvBoaqm8BvmkKEL3hiZPQfO0TUwPpLaf9ERHzIuYyVpyhroG
-                            sZ8jaN14br259ZVuQl9k1qMBX8/AqNvthjhI3mSc0vNquBDRUEFReLPO8ai/U9sm
-                            S8DSg/b50hcP56EA6fY1NK7Yhz4V4yeqeKU+vbxxDkhnN1aub10M/5Ay94cbJPUc
-                            eQIDAQAB
+                            $publickey = '-----BEGIN PUBLIC KEY-----'.PHP_EOL.'
+                            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05FL3StCKstAZgOh4Bk1'.PHP_EOL.'
+                            QEodBenu+BM1jwbYPWi0wyzLwrdglUgP3LnGQJk+jOoHaGtNbHJb5ejJZ7ETLkJY'.PHP_EOL.'
+                            /dsmsi52+l2QE6CzosBPsbY1M3MUrVJvDUQZFWAs3BO+Y/2CimNNcGC0HQn1AEYO'.PHP_EOL.'
+                            soNrZN1GqdIjQlNCfvBoaqm8BvmkKEL3hiZPQfO0TUwPpLaf9ERHzIuYyVpyhroG'.PHP_EOL.'
+                            sZ8jaN14br259ZVuQl9k1qMBX8/AqNvthjhI3mSc0vNquBDRUEFReLPO8ai/U9sm'.PHP_EOL.'
+                            S8DSg/b50hcP56EA6fY1NK7Yhz4V4yeqeKU+vbxxDkhnN1aub10M/5Ay94cbJPUc'.PHP_EOL.'
+                            eQIDAQAB'.PHP_EOL.'
                             -----END PUBLIC KEY-----';
                             $scopedata = "{data: [{type: 'passport'}], v: 1}";
                             $builddata = [
                                 'domain' => 'telegrampassport',
                                 'bot_id' => '5716304295',
-                                'scope' => json_encode($scopedata),
-                                'public_key' => $publickey,
+                                'scope' => encodeURIComponent($scopedata),
+                                'public_key' => encodeURIComponent($publickey),
                                 'nonce' => rand(0,9999999),
                                 'payload' => 'nonce'
                             ];

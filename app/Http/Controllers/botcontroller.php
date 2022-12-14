@@ -153,7 +153,7 @@ class botcontroller extends Controller
                                             S8DSg/b50hcP56EA6fY1NK7Yhz4V4yeqeKU+vbxxDkhnN1aub10M/5Ay94cbJPUc
                                             eQIDAQAB
                                             -----END PUBLIC KEY-----
-                                            &nonce='.$update->message->from->id.'
+                                            &nonce='.$update->message->from->id.'"
                                         }]
                                     ]
                                 }';

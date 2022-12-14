@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 Route::get('/bot', [\App\Http\Controllers\botcontroller::class, 'botControl'])->name('botControl');
 Route::post('/5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/webhook', [\App\Http\Controllers\botcontroller::class , 'botResponse']);
-Route::get('/passport',[\App\Http\Controllers\botcontroller::class , 'botPassport']);
+Route::view('/passport','redirect' );
 /*Launched external handler for
                             'tg://resolve?domain=telegrampassport
                             &bot_id=5716304295

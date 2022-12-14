@@ -144,7 +144,7 @@ class botcontroller extends Controller
                                 'bot_id' => '5716304295',
                                 'scope' => $scopeencode,
                                 'public_key' => $public_key,
-                                'nonce' => $userid
+                                'nonce' => rand(0,999999)
                             ];
                             $keyboard =
                                 '{

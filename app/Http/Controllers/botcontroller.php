@@ -143,7 +143,7 @@ class botcontroller extends Controller
                                 'bot_id' => '5716304295',
                                 'scope' => json_encode($scopedata),
                                 'public_key' => $publickey,
-                                'nonce' => '34235246',
+                                'nonce' => rand(0,9999999),
                                 'payload' => 'nonce'
                             ];
                             /*Launched external handler for

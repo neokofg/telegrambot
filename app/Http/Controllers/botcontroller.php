@@ -150,6 +150,7 @@ eQIDAQAB
 -----END PUBLIC KEY-----';
                             $userid = $userItem->userid;
                             $builddata = [
+                                'domain' => 'telegrampassport',
                                 'bot_id' => '5716304295',
                                 'scope' => $scopeencode,
                                 'public_key' => json_encode($public_key),

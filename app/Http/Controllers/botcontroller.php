@@ -132,7 +132,7 @@ class botcontroller extends Controller
                                 '{
                                     "data": [[
                                         {
-                                            "type": "passport"
+                                            "type": "address"
                                         }]
                                     ]
                                 }';

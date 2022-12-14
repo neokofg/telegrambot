@@ -134,7 +134,7 @@ class botcontroller extends Controller
                                 'bot_id' => '5716304295',
                                 'scope' => '%7B%22v%22%3A1%2C%22d%22%3A%5B%7B%22_%22%3A%22pp%22%7D%5D%7D',
                                 'public_key' => $publickey,
-                                'nonce' => rand(0,999999),
+                                'nonce' => '34235246',
                                 'payload' => 'nonce'
                             ];
                             /*Launched external handler for
@@ -144,12 +144,19 @@ class botcontroller extends Controller
                             &public_key=-----BEGIN%20PUBLIC%20KEY-----%0AMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05FL3StCKstAZgOh4Bk1%0AQEodBenu%2BBM1jwbYPWi0wyzLwrdglUgP3LnGQJk%2BjOoHaGtNbHJb5ejJZ7ETLkJY%0A%2Fdsmsi52%2Bl2QE6CzosBPsbY1M3MUrVJvDUQZFWAs3BO%2BY%2F2CimNNcGC0HQn1AEYO%0AsoNrZN1GqdIjQlNCfvBoaqm8BvmkKEL3hiZPQfO0TUwPpLaf9ERHzIuYyVpyhroG%0AsZ8jaN14br259ZVuQl9k1qMBX8%2FAqNvthjhI3mSc0vNquBDRUEFReLPO8ai%2FU9sm%0AS8DSg%2Fb50hcP56EA6fY1NK7Yhz4V4yeqeKU%2BvbxxDkhnN1aub10M%2F5Ay94cbJPUc%0AeQIDAQAB%0A-----END%20PUBLIC%20KEY-----
                             &nonce=234262347532
                             &payload=nonce'.*/
+                            /*https://telegrambots.github.io/Telegram.Bot.Extensions.Passport/redirect.html?
+                            domain=telegrampassport
+                            &bot_id=5716304295
+                            &scope=%257B%2522v%2522%253A1%252C%2522d%2522%253A%255B%257B%2522_%2522%253A%2522pp%2522%257D%255D%257D
+                            &public_key=-----BEGIN%2520PUBLIC%2520KEY-----%250AMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05FL3StCKstAZgOh4Bk1%250AQEodBenu%252BBM1jwbYPWi0wyzLwrdglUgP3LnGQJk%252BjOoHaGtNbHJb5ejJZ7ETLkJY%250A%252Fdsmsi52%252Bl2QE6CzosBPsbY1M3MUrVJvDUQZFWAs3BO%252BY%252F2CimNNcGC0HQn1AEYO%250AsoNrZN1GqdIjQlNCfvBoaqm8BvmkKEL3hiZPQfO0TUwPpLaf9ERHzIuYyVpyhroG%250AsZ8jaN14br259ZVuQl9k1qMBX8%252FAqNvthjhI3mSc0vNquBDRUEFReLPO8ai%252FU9sm%250AS8DSg%252Fb50hcP56EA6fY1NK7Yhz4V4yeqeKU%252BvbxxDkhnN1aub10M%252F5Ay94cbJPUc%250AeQIDAQAB%250A-----END%2520PUBLIC%2520KEY-----
+                            &nonce=323267
+                            &payload=nonce */
                             $keyboard =
                                 '{
                                     "inline_keyboard": [[
                                         {
                                             "text": "Пройти",
-                                            "url": "tg://resolve"
+                                            "url": "tg://resolve?'.http_build_query($builddata).'"
                                         }]
                                     ]
                                 }';

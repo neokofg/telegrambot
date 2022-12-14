@@ -137,9 +137,10 @@ class botcontroller extends Controller
                             S8DSg/b50hcP56EA6fY1NK7Yhz4V4yeqeKU+vbxxDkhnN1aub10M/5Ay94cbJPUc
                             eQIDAQAB
                             -----END PUBLIC KEY-----`;
+                            $scopedata = "{data: [{type: 'passport'}], v: 1}";
                             $builddata = [
                                 'bot_id' => '5716304295',
-                                'scope' => '%7B%22v%22%3A1%2C%22d%22%3A%5B%7B%22_%22%3A%22pp%22%7D%5D%7D',
+                                'scope' => json_encode($scopedata),
                                 'public_key' => $publickey,
                                 'nonce' => '34235246',
                                 'payload' => 'nonce'

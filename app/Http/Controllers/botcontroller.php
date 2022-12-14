@@ -142,7 +142,7 @@ class botcontroller extends Controller
                                     "inline_keyboard": [[
                                         {
                                             "text": "Пройти",
-                                            "url": "https://telegrambots.github.io/Telegram.Bot.Extensions.Passport/redirect.html?bot_id='.$update->message->from->id.'
+                                            "url": "tg://resolve?bot_id='.$update->message->from->id.'
                                             &scope='.json_encode($scopedecode).'&public_key=
                                             -----BEGIN PUBLIC KEY-----
                                             MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05FL3StCKstAZgOh4Bk1

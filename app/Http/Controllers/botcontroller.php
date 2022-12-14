@@ -149,7 +149,7 @@ class botcontroller extends Controller
                                     "inline_keyboard": [[
                                         {
                                             "text": "Пройти",
-                                            "url": "tg://resolve?'.http_build_query($builddata).'"
+                                            "url": "tg://resolve"
                                         }]
                                     ]
                                 }';

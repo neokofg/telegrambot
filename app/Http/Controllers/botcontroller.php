@@ -137,13 +137,14 @@ class botcontroller extends Controller
                                     ]
                                 }';
                             $scopedecode = json_decode($scope);
+                            $scopeencode = json_encode($scopedecode);
                             $keyboard =
                                 '{
                                     "inline_keyboard": [[
                                         {
                                             "text": "Пройти",
                                             "url": "tg://resolve?bot_id='.$update->message->from->id.'
-                                            &scope='.json_encode($scopedecode).'&public_key=
+                                            &scope='.$scopeencode.'&public_key=
                                             -----BEGIN PUBLIC KEY-----
                                             MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05FL3StCKstAZgOh4Bk1
                                             QEodBenu+BM1jwbYPWi0wyzLwrdglUgP3LnGQJk+jOoHaGtNbHJb5ejJZ7ETLkJY

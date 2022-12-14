@@ -133,6 +133,7 @@ class botcontroller extends Controller
                             );
                             DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                             $builddata = [
+                                'domain' => 'telegrampassport',
                                 'bot_id' => '5716304295',
                                 'nonce'=> rand(0,9999999)
                             ];

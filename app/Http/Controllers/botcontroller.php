@@ -145,7 +145,6 @@ class botcontroller extends Controller
                             $builddata = [
                                 'domain' => 'telegrampassport',
                                 'bot_id' => '5716304295',
-                                'scope' => '%7B%22v%22%3A1%2C%22d%22%3A%5B%7B%22_%22%3A%22pp%22%7D%5D%7D',
                                 'public_key' => encodeURIComponent($publickey),
                                 'nonce' => rand(0,9999999),
                                 'payload' => 'nonce'
@@ -162,7 +161,7 @@ class botcontroller extends Controller
                                     "inline_keyboard": [[
                                         {
                                             "text": "Пройти",
-                                            "url": "https://telegrambots.github.io/Telegram.Bot.Extensions.Passport/redirect.html?'.http_build_query($builddata).'"
+                                            "url": "https://telegrambots.github.io/Telegram.Bot.Extensions.Passport/redirect.html?'.http_build_query($builddata).'&scope=%7B%22v%22%3A1%2C%22d%22%3A%5B%7B%22_%22%3A%22pp%22%7D%5D%7D"
                                         }]
                                     ]
                                 }';

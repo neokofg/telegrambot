@@ -134,7 +134,8 @@ class botcontroller extends Controller
                                 'scope' => '%7B%22v%22%3A1%2C%22d%22%3A%5B%7B%22_%22%3A%22pp%22%7D%5D%7D',
                                 'public_key' => $publickey,
                                 'nonce' => '34235246',
-                                'payload' => 'nonce'
+                                'payload' => 'nonce',
+                                'domain' => 'telegrampassport'
                             ];
                             /*Launched external handler for
                             'tg://resolve?domain=telegrampassport

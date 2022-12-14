@@ -100,16 +100,16 @@ class botcontroller extends Controller
 Для этого и был создан канал GETLET https://t.me/getlet, в первую очередь для взаимопомощи между земляками из Республики Саха (Якутия), а также как возможность получить дополнительный заработок'
                     ];
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-                    $data2 = [
-                        'chat_id' => $update->message->chat->id,
-                        'text' => 'Что вы хотите сделать?',
-                        'reply_markup' => json_encode($decode)
-                    ];
                     $userdata = array(
                         'status' => 'started',
                         "updated_at" => date('Y-m-d H:i:s')
                     );
                     DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                    $data2 = [
+                        'chat_id' => $update->message->chat->id,
+                        'text' => 'Что вы хотите сделать?',
+                        'reply_markup' => json_encode($decode)
+                    ];
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                 }else{
                     foreach ($user as $userItem){
@@ -125,10 +125,20 @@ class botcontroller extends Controller
                                 "updated_at" => date('Y-m-d H:i:s')
                             );
                             DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                            $keyboard =
+                                '{
+                                    "inline_keyboard": [[
+                                        {
+                                            "text": "Пройти",
+                                            "callback_data": "13"
+                                        }]
+                                    ]
+                                }';
+                            $decodes = json_decode($keyboard);
                             $data2 = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Что вы хотите сделать?',
-                                'reply_markup' => json_encode($decode)
+                                'text' => 'Вам нужно пройти пасспортную аутентификацию',
+                                'reply_markup' => json_encode($decodes)
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                         }
@@ -449,7 +459,7 @@ class botcontroller extends Controller
                         DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Укажите цену'.PHP_EOL.'Пример: 1000 рублей',
+                            'text' => 'Укажите цену'.PHP_EOL.'Пример: 3000 рублей',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -458,12 +468,12 @@ class botcontroller extends Controller
                             'price' => $update->message->text
                         ];
                         $validator = Validator::make($input, [
-                            'price' => 'starts_with:1,2,3,4,5,6,7,8,9|ends_with:рублей,руб'
+                            'price' => 'starts_with:1,2,3,4,5,6,7,8,9|ends_with:рублей,руб,тг,тенге'
                         ]);
                         if($validator->fails()){
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Укажите цену по формату'.PHP_EOL.'Формат: 1000 рублей',
+                                'text' => 'Укажите цену по формату'.PHP_EOL.'Формат: 3000 рублей',
                                 'reply_to_message_id' => $update->message->message_id,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -776,6 +786,20 @@ class botcontroller extends Controller
                     'text' => 'Если хотите сделать что-то еще, то напишите /start',
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+            }else if($update->callback_query->data == 13){
+                $dataEnc =
+                    '{
+                            "EncryptedPassportElement": [[
+                                {
+                                    "type": "passport",
+                                }]
+                            ]
+                        }';
+                $decode = json_decode($dataEnc);
+                $data2 = [
+                    'data' => json_encode($decode)
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/PassportData?" . http_build_query($data2));
             }else{
                 $callback = $update->callback_query->data;
                 $callbackpieces = explode(" ", $callback);

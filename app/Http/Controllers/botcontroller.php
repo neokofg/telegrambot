@@ -138,11 +138,14 @@ class botcontroller extends Controller
                                 }';
                             $scopedecode = json_decode($scope);
                             $scopeencode = json_encode($scopedecode);
-                            $name = 'public_key.pem';
-                            $fp = fopen($name, 'rb');
-                            header("Content-Type: pem");
-                            header("Content-Length: " . filesize($name));
-                            $public_key = fpassthru($fp);
+                            // fetch private key from file and ready it
+                            $fp = fopen("public_key.pem", "r");
+                            $priv_key = fread($fp, 8192);
+                            fclose($fp);
+                            $pkeyid = openssl_get_privatekey($priv_key);
+                            // decrypt the data and store it in $open
+                            openssl_open($sealed, $open, $env_key, $pkeyid);
+                            $public_key = $open;
                             $userid = $userItem->userid;
                             $builddata = [
                                 'bot_id' => '5716304295',

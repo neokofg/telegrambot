@@ -139,6 +139,7 @@ class botcontroller extends Controller
                             -----END PUBLIC KEY-----`;
                             $scopedata = "{data: [{type: 'passport'}], v: 1}";
                             $builddata = [
+                                'domain' => 'telegrampassport',
                                 'bot_id' => '5716304295',
                                 'scope' => json_encode($scopedata),
                                 'public_key' => $publickey,

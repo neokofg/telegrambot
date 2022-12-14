@@ -134,8 +134,7 @@ class botcontroller extends Controller
                             DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
                             $builddata = [
                                 'bot_id' => '5716304295',
-                                'nonce' => rand(0,9999999),
-                                'payload' => 'nonce'
+                                'nonce' => rand(0,9999999)
                             ];
                             /*Launched external handler for
                             'tg://resolve?domain=telegrampassport

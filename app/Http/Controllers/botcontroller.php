@@ -16,6 +16,9 @@ class botcontroller extends Controller
     }
     public function testBOT(){
     }
+    public function botPassport(){
+
+    }
     public function botResponse(){
         $result = file_get_contents('php://input');
         $update = json_decode($result);
@@ -125,12 +128,31 @@ class botcontroller extends Controller
                                 "updated_at" => date('Y-m-d H:i:s')
                             );
                             DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
+                            $scope =
+                                '{
+                                    "data": [[
+                                        {
+                                            "type": "passport"
+                                        }]
+                                    ]
+                                }';
+                            $scopedecode = json_decode($scope);
                             $keyboard =
                                 '{
                                     "inline_keyboard": [[
                                         {
                                             "text": "Пройти",
-                                            "callback_data": "13"
+                                            "url": "https://mpit14.ru/passport?bot_id='.$update->message->from->id.'
+                                            &scope='.json_encode($scopedecode).'&public_key=
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05FL3StCKstAZgOh4Bk1
+QEodBenu+BM1jwbYPWi0wyzLwrdglUgP3LnGQJk+jOoHaGtNbHJb5ejJZ7ETLkJY
+/dsmsi52+l2QE6CzosBPsbY1M3MUrVJvDUQZFWAs3BO+Y/2CimNNcGC0HQn1AEYO
+soNrZN1GqdIjQlNCfvBoaqm8BvmkKEL3hiZPQfO0TUwPpLaf9ERHzIuYyVpyhroG
+sZ8jaN14br259ZVuQl9k1qMBX8/AqNvthjhI3mSc0vNquBDRUEFReLPO8ai/U9sm
+S8DSg/b50hcP56EA6fY1NK7Yhz4V4yeqeKU+vbxxDkhnN1aub10M/5Ay94cbJPUc
+eQIDAQAB
+-----END PUBLIC KEY-----&nonce='.$update->message->from->id.'
                                         }]
                                     ]
                                 }';
@@ -786,20 +808,6 @@ class botcontroller extends Controller
                     'text' => 'Если хотите сделать что-то еще, то напишите /start',
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-            }else if($update->callback_query->data == 13){
-                $dataEnc =
-                    '{
-                            "EncryptedPassportElement": [[
-                                {
-                                    "type": "passport",
-                                }]
-                            ]
-                        }';
-                $decode = json_decode($dataEnc);
-                $data2 = [
-                    'data' => json_encode($decode)
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/PassportData?" . http_build_query($data2));
             }else{
                 $callback = $update->callback_query->data;
                 $callbackpieces = explode(" ", $callback);

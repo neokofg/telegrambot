@@ -437,7 +437,7 @@ eQIDAQAB
 -----END PUBLIC KEY-----`;
     Telegram.Passport.createAuthButton('telegram_passport_auth', {
         bot_id:       5716304295, // place id of your bot here
-        scope:        {data: [{type: 'passport'}], v: 1},
+        scope:        {data: [{type: 'address'}], v: 1},
         public_key:   multi, // place public key of your bot here
         nonce:        Math.floor(Math.random() * 9999999) // place nonce here
     });

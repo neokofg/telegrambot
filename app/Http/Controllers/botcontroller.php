@@ -134,7 +134,8 @@ class botcontroller extends Controller
                                         {
                                             "type": "address"
                                         }]
-                                    ]
+                                    ],
+                                    "v": "1"
                                 }';
                             $scopedecode = json_decode($scope);
                             $scopeencode = json_encode($scopedecode);

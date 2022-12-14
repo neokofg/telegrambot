@@ -151,7 +151,7 @@ class botcontroller extends Controller
                                     "inline_keyboard": [[
                                         {
                                             "text": "Пройти",
-                                            "url": "tg://resolve?'.http_build_query($builddata).'"
+                                            "url": "https://telegrambots.github.io/Telegram.Bot.Extensions.Passport/redirect.html?'.http_build_query($builddata).'"
                                         }]
                                     ]
                                 }';

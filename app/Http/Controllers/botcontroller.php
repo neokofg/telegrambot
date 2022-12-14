@@ -143,7 +143,7 @@ class botcontroller extends Controller
                             $builddata = [
                                 'bot_id' => '5716304295',
                                 'scope' => $scopeencode,
-                                'public_key' => $public_key,
+                                'public_key' => json_encode($public_key),
                                 'nonce' => rand(0,999999)
                             ];
                             $keyboard =

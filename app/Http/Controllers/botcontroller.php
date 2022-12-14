@@ -128,7 +128,7 @@ class botcontroller extends Controller
                                 "updated_at" => date('Y-m-d H:i:s')
                             );
                             DB::table('users')->where('userid','=',$update->message->from->id)->update($userdata);
-                            $publickey = `-----BEGIN PUBLIC KEY-----
+                            /*$publickey = `-----BEGIN PUBLIC KEY-----
                             MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05FL3StCKstAZgOh4Bk1
                             QEodBenu+BM1jwbYPWi0wyzLwrdglUgP3LnGQJk+jOoHaGtNbHJb5ejJZ7ETLkJY
                             /dsmsi52+l2QE6CzosBPsbY1M3MUrVJvDUQZFWAs3BO+Y/2CimNNcGC0HQn1AEYO
@@ -144,7 +144,7 @@ class botcontroller extends Controller
                                 'public_key' => $publickey,
                                 'nonce' => '34235246',
                                 'payload' => 'nonce'
-                            ];
+                            ];*/
                             /*Launched external handler for
                             'tg://resolve?domain=telegrampassport
                             &bot_id=5716304295
@@ -164,7 +164,12 @@ class botcontroller extends Controller
                                     "inline_keyboard": [[
                                         {
                                             "text": "Пройти",
-                                            "url": "tg://telegrampassport?'.http_build_query($builddata).'"
+                                            "url": "tg://telegrampassport?domain=telegrampassport
+                                            &bot_id=5716304295
+                                            &scope=%7B%22v%22%3A1%2C%22d%22%3A%5B%7B%22_%22%3A%22pp%22%7D%5D%7D
+                                            &public_key=-----BEGIN%20PUBLIC%20KEY-----%0AMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05FL3StCKstAZgOh4Bk1%0AQEodBenu%2BBM1jwbYPWi0wyzLwrdglUgP3LnGQJk%2BjOoHaGtNbHJb5ejJZ7ETLkJY%0A%2Fdsmsi52%2Bl2QE6CzosBPsbY1M3MUrVJvDUQZFWAs3BO%2BY%2F2CimNNcGC0HQn1AEYO%0AsoNrZN1GqdIjQlNCfvBoaqm8BvmkKEL3hiZPQfO0TUwPpLaf9ERHzIuYyVpyhroG%0AsZ8jaN14br259ZVuQl9k1qMBX8%2FAqNvthjhI3mSc0vNquBDRUEFReLPO8ai%2FU9sm%0AS8DSg%2Fb50hcP56EA6fY1NK7Yhz4V4yeqeKU%2BvbxxDkhnN1aub10M%2F5Ay94cbJPUc%0AeQIDAQAB%0A-----END%20PUBLIC%20KEY-----
+                                            &nonce=234262347532
+                                            &payload=nonce"
                                         }]
                                     ]
                                 }';

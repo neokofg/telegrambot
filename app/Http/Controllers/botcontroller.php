@@ -133,7 +133,7 @@ class botcontroller extends Controller
                                 'domain' => 'telegrampassport',
                                 'bot_id' => '5716304295',
                                 'scope' => '%7B%22v%22%3A1%2C%22d%22%3A%5B%7B%22_%22%3A%22pp%22%7D%5D%7D',
-                                'public_key' => $publickey
+                                'public_key' => $publickey,
                                 'nonce' => rand(0,999999),
                                 'payload' => 'nonce'
                             ];

@@ -804,4 +804,3 @@ class botcontroller extends Controller
             }
         }
     }
-}

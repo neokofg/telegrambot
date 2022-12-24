@@ -19,7 +19,56 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-            $result = file_get_contents('php://input');
+            $result = '{
+    "ok": true,
+    "result": [
+        {
+            "update_id": 255184297,
+            "message": {
+                "message_id": 2330,
+                "from": {
+                    "id": 864640107,
+                    "is_bot": false,
+                    "first_name": "Андрей",
+                    "last_name": "Архангельский",
+                    "username": "neokocs",
+                    "language_code": "ru"
+                },
+                "chat": {
+                    "id": 864640107,
+                    "first_name": "Андрей",
+                    "last_name": "Архангельский",
+                    "username": "neokocs",
+                    "type": "private"
+                },
+                "date": 1671878563,
+                "photo": [
+                    {
+                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA3MAAywE",
+                        "file_unique_id": "AQAD1cMxGzlSOUl4",
+                        "file_size": 2212,
+                        "width": 90,
+                        "height": 90
+                    },
+                    {
+                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA20AAywE",
+                        "file_unique_id": "AQAD1cMxGzlSOUly",
+                        "file_size": 35320,
+                        "width": 320,
+                        "height": 320
+                    },
+                    {
+                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA3gAAywE",
+                        "file_unique_id": "AQAD1cMxGzlSOUl9",
+                        "file_size": 125641,
+                        "width": 736,
+                        "height": 736
+                    }
+                ]
+            }
+        }
+    ]
+}';
             $update = json_decode($result);
             if(isset($update->message->photo)){
                 $data2 = [

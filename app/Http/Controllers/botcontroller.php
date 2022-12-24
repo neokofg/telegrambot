@@ -20,15 +20,7 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-            $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/photos/file_0.jpg";
-            $file =  Http::get($url);
-            $filename = 'photos/file_0.jpg';
-            $filename = explode('/',$filename);
-            $filename = explode('.',$filename[1]);
-            $hash = Hash::make($filename[0]);
-            $hash = str_replace('/','',$hash);
-            $filename = date('YmdHi').$hash.'.'.$filename[1];
-            Storage::disk('public')->put($filename, $file);
+
         }
         public function botResponse()
         {
@@ -574,12 +566,14 @@ class botcontroller extends Controller
                                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
                                 $responseupdate = json_decode($response);
                                 if(isset($responseupdate->result->file_path)){
-                                    $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
+                                    $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/photos/file_0.jpg";
                                     $file =  Http::get($url);
-                                    $filename = $responseupdate->result->file_path;
+                                    $filename = 'photos/file_0.jpg';
                                     $filename = explode('/',$filename);
-                                    $filename = $filename[1];
-                                    $filename = date('YmdHi').$filename->hashName();
+                                    $filename = explode('.',$filename[1]);
+                                    $hash = Hash::make($filename[0]);
+                                    $hash = str_replace('/','',$hash);
+                                    $filename = date('YmdHi').$hash.'.'.$filename[1];
                                     Storage::disk('public')->put($filename, $file);
                                     $userdata = array(
                                         'status' => 'selfiesend',

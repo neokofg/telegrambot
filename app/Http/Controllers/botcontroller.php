@@ -570,8 +570,8 @@ class botcontroller extends Controller
                                 ];
                                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
                                 $responseupdate = json_decode($response);
-                                if(isset($responseupdate->file_path)){
-                                    $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->file_path;
+                                if(isset($responseupdate->result->file_path)){
+                                    $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
                                     $contents = file_get_contents($url);
                                     $filename = basename($url);
                                     $path = public_path('images');

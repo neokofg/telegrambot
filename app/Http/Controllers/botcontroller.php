@@ -558,30 +558,21 @@ class botcontroller extends Controller
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         }
-                    } else if ($userItem->status == 'selfiesend') {
-                        $userdata = array(
-                            'status' => 'started',
-                            'passport' => 'true',
-                            "updated_at" => date('Y-m-d H:i:s')
-                        );
-                        DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
+                    }else if($userItem->status == 'passportsend'){
                         $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Успешно!',
+                            'text' => 'Отправьте фотографию вашего паспорта!',
                             'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-                        $data2 = [
+                    } else if ($userItem->status == 'selfiesend') {
+                        $data = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Работая в нашем сервисе вы соглашаетесь о политике конфиденциальности /policy',
+                            'text' => 'Отправьте фотографию селфи вместе с вашим паспортом!',
+                            'reply_to_message_id' => $update->message->message_id,
                         ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
-                        $data3 = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Если хотите сделать что-то еще, то напишите /start',
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data3));
-                    } else {
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                    }else {
                         $data = [
                             'chat_id' => $update->message->chat->id,
                             'text' => 'Если хотите сделать что-то еще, то напишите /start',
@@ -594,27 +585,12 @@ class botcontroller extends Controller
             $user = DB::table('users')->where('userid', '=', $update->message->from->id)->get();
             foreach ($user as $userItem) {
                 if ($userItem->status == 'passportsend') {
-                        $data = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Дошло!',
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         $data2 = [
                             'file_id' => $update->message->photo[0]->file_id
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?" . http_build_query($data2));
                         $responseupdate = json_decode($response);
-                        $data3 = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Дошло2!',
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data3));
                         if (isset($responseupdate->result->file_path)) {
-                            $data = [
-                                'chat_id' => $update->message->chat->id,
-                                'text' => 'Дошло3!',
-                            ];
-                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                             $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/" . $responseupdate->result->file_path;
                             $file = Http::get($url);
                             $filename = $responseupdate->result->file_path;
@@ -636,6 +612,46 @@ class botcontroller extends Controller
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         }
+                }else if($userItem->status == 'selfiesend'){
+                    $data2 = [
+                        'file_id' => $update->message->photo[0]->file_id
+                    ];
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?" . http_build_query($data2));
+                    $responseupdate = json_decode($response);
+                    if (isset($responseupdate->result->file_path)) {
+                        $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/" . $responseupdate->result->file_path;
+                        $file = Http::get($url);
+                        $filename = $responseupdate->result->file_path;
+                        $filename = explode('/', $filename);
+                        $filename = explode('.', $filename[1]);
+                        $hash = Hash::make($filename[0]);
+                        $hash = str_replace('/', '', $hash);
+                        $filename = date('YmdHi') . $hash . '.' . $filename[1];
+                        Storage::disk('public')->put($filename, $file);
+                        $userdata = array(
+                            'status' => 'started',
+                            'passport' => 'true',
+                            'firstselfie' => $filename,
+                            "updated_at" => date('Y-m-d H:i:s')
+                        );
+                        DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
+                        $data = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Успешно!',
+                            'reply_to_message_id' => $update->message->message_id,
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        $data2 = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Работая в нашем сервисе вы соглашаетесь о политике конфиденциальности /policy',
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                        $data3 = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Если хотите сделать что-то еще, то напишите /start',
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data3));
+                    }
                 }
             }
         }else if (isset($update->callback_query)) {

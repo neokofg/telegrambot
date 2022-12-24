@@ -608,6 +608,7 @@ class botcontroller extends Controller
                             DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
                             $data = [
                                 'chat_id' => $update->message->chat->id,
+                                'reply_to_message_id' => $update->message->message_id,
                                 'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта' . PHP_EOL . '(Кем выдано/сведения о личности владельца паспорта)',
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -635,15 +636,10 @@ class botcontroller extends Controller
                             "updated_at" => date('Y-m-d H:i:s')
                         );
                         DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
-                        $data = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Успешно!',
-                            'reply_to_message_id' => $update->message->message_id,
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         $data2 = [
                             'chat_id' => $update->message->chat->id,
                             'text' => 'Работая в нашем сервисе вы соглашаетесь о политике конфиденциальности /policy',
+                            'reply_to_message_id' => $update->message->message_id,
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                         $data3 = [

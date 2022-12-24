@@ -569,12 +569,10 @@ class botcontroller extends Controller
                                 ];
                                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
                                 if(isset($response->file_path)){
-                                    $file = Storage::disk('public')->download("https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$response->file_path);
-                                    $filename= date('YmdHi').$file->hashName();
-                                    $file-> move(public_path('images'), $filename);
+                                    $file = Storage::disk('public')->download("https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$response->file_path)->get($fileName);
                                     $userdata = array(
                                         'status' => 'selfiesend',
-                                        'firstpassport' => $filename,
+                                        'firstpassport' => $file,
                                         "updated_at" => date('Y-m-d H:i:s')
                                     );
                                     DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);

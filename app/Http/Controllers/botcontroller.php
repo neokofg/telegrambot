@@ -572,8 +572,7 @@ class botcontroller extends Controller
                                     $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$response->file_path;
                                     $contents = file_get_contents($url);
                                     $filename = basename($url);
-                                    $path = '/public/images/' . basename($url);
-                                    Storage::put($path, $contents);
+                                    Storage::disk('public')->put($contents);
                                     $userdata = array(
                                         'status' => 'selfiesend',
                                         'firstpassport' => $filename,

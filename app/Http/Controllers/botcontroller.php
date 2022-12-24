@@ -79,18 +79,7 @@ class botcontroller extends Controller
                     $filename = basename($url);
                     $path = public_path('images');
                     Storage::put($path, $contents);
-                    $userdata = array(
-                        'status' => 'selfiesend',
-                        'firstpassport' => $filename,
-                        "updated_at" => date('Y-m-d H:i:s')
-                    );
-                    DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
-                    $data = [
-                        'chat_id' => $update->message->chat->id,
-                        'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта'.PHP_EOL.'(Кем выдано/сведения о личности владельца паспорта)',
-                        'reply_to_message_id' => $update->message->message_id,
-                    ];
-                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                    echo 'success!';
                 }else{
                     echo 2;
                 }

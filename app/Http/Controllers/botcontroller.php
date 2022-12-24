@@ -75,11 +75,11 @@ class botcontroller extends Controller
                 $responseupdate = json_decode($response);
                 if(isset($responseupdate->result->file_path)){
                     $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
-                    $file =  Http::get($url);
-                    $return = $this->base64_to_jpeg($file,'temp.jpg');
-                    $fp = fopen($return, 'rb');
+                    $file =  base64_decode(Http::get($url));
+                    //$return = $this->base64_to_jpeg($file,'temp.jpg');
+                    $fp = fopen($file, 'rb');
                     header("Content-Type: image/png");
-                    header("Content-Length: " . filesize($return));
+                    header("Content-Length: " . filesize($file));
                     return(fpassthru($fp));
                     echo 'success!';
                 }else{

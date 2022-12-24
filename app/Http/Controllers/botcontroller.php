@@ -20,7 +20,12 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-
+            $data2 = [
+                'file_id' => 'AgACAgIAAxkBAAIJgGOnAsmAXlIGGLGzYIs1CneBY0VcAALwxDEbOVI5Saay3Q9RD0gmAQADAgADbQADLAQ'
+            ];
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
+            $responseupdate = json_decode($response);
+            echo $responseupdate->result->file_path;
         }
         public function botResponse()
         {

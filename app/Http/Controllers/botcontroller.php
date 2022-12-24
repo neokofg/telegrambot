@@ -854,13 +854,13 @@ class botcontroller extends Controller
                     );
                     DB::table('users')->where('userid', '=', $update->callback_query->from->id)->update($userdata);
                     $data3 = [
-                        'chat_id' => $update->message->chat->id,
+                        'chat_id' => $update->callback_query->from->id,
                         'message_id' => $update->callback_query->message->message_id,
                         'text' => 'Мы храним паспортные данные всех пользователей для безопасности всех заинтересованных лиц',
                     ];
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data3));
                     $data4 = [
-                        'chat_id' => $update->message->chat->id,
+                        'chat_id' => $update->callback_query->from->id,
                         'text' => 'Отправьте фотографии 2 и 3 страницы вашего пасспорта (Кем выдано/сведения о личности владельца пасспорта)'
                     ];
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data4));

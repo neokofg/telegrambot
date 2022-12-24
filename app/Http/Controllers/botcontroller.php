@@ -20,22 +20,73 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-            $data2 = [
-                'file_id' => 'AgACAgIAAxkBAAIJDGOmv6KTSA0IyjE9mkC_4KX9cGFuAAK-wzEbOVI5SYdT6d3i-EmJAQADAgADeAADLAQ'
-            ];
-            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
-            $responseupdate = json_decode($response);
-            if(isset($responseupdate->result->file_path)){
-                $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
-                $file =  Http::get($url);
-                $filename = $responseupdate->result->file_path;
-                $filename = explode('/',$filename);
-                $filename = explode('.',$filename[1]);
-                $hash = Hash::make($filename[0]);
-                $hash = str_replace('/','',$hash);
-                $filename = date('YmdHi').$hash.'.'.$filename[1];
-                Storage::disk('public')->put($filename, $file);
-                echo 'success';
+            $result = '{
+    "ok": true,
+    "result": [
+        {
+            "update_id": 255184284,
+            "message": {
+                "message_id": 2317,
+                "from": {
+                    "id": 864640107,
+                    "is_bot": false,
+                    "first_name": "Андрей",
+                    "last_name": "Архангельский",
+                    "username": "neokocs",
+                    "language_code": "ru"
+                },
+                "chat": {
+                    "id": 864640107,
+                    "first_name": "Андрей",
+                    "last_name": "Архангельский",
+                    "username": "neokocs",
+                    "type": "private"
+                },
+                "date": 1671873186,
+                "photo": [
+                    {
+                        "file_id": "AgACAgIAAxkBAAIJDWOmwqJNwmrwY6ZV9bEvqt5rV2hjAAK-wzEbOVI5SYdT6d3i-EmJAQADAgADcwADLAQ",
+                        "file_unique_id": "AQADvsMxGzlSOUl4",
+                        "file_size": 2008,
+                        "width": 90,
+                        "height": 90
+                    }
+                ]
+            }
+        }
+    ]
+}';
+            $update = json_encode($result);
+            $update = json_decode($result);
+            if(isset($update->message->photo)){
+                $data2 = [
+                    'file_id' => $update->message->photo[0]->file_id
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
+                $responseupdate = json_decode($response);
+                if(isset($responseupdate->result->file_path)){
+                    $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
+                    $file =  Http::get($url);
+                    $filename = $responseupdate->result->file_path;
+                    $filename = explode('/',$filename);
+                    $filename = explode('.',$filename[1]);
+                    $hash = Hash::make($filename[0]);
+                    $hash = str_replace('/','',$hash);
+                    $filename = date('YmdHi').$hash.'.'.$filename[1];
+                    Storage::disk('public')->put($filename, $file);
+                    $userdata = array(
+                        'status' => 'selfiesend',
+                        'firstpassport' => $filename,
+                        "updated_at" => date('Y-m-d H:i:s')
+                    );
+                    DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
+                    $data = [
+                        'chat_id' => $update->message->chat->id,
+                        'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта'.PHP_EOL.'(Кем выдано/сведения о личности владельца паспорта)',
+                        'reply_to_message_id' => $update->message->message_id,
+                    ];
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                }
             }
         }
         public function botResponse()

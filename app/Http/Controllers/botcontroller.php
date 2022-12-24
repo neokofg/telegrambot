@@ -78,8 +78,8 @@ class botcontroller extends Controller
                     $file =  Http::get($url);
                     $return = $this->base64_to_jpeg($file,'temp.jpg');
                     //$fp = fopen($return, 'rb');
-                    //header("Content-Type: image/jpg");
-                    //header("Content-Length: " . filesize($return));
+                    header("Content-Type: image/jpg");
+                    header("Content-Length: " . filesize($return));
                     return(fpassthru($return));
                     echo 'success!';
                 }else{

@@ -593,12 +593,27 @@ class botcontroller extends Controller
             foreach ($user as $userItem) {
                 if ($userItem->status == 'passportsend') {
                     if (isset($update->message->photo)) {
+                        $data = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Дошло!',
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         $data2 = [
-                            'file_id' => $update->message->photo[1]->file_id
+                            'file_id' => $update->message->photo[0]->file_id
                         ];
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?" . http_build_query($data2));
                         $responseupdate = json_decode($response);
+                        $data3 = [
+                            'chat_id' => $update->message->chat->id,
+                            'text' => 'Дошло2!',
+                        ];
+                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data3));
                         if (isset($responseupdate->result->file_path)) {
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Дошло3!',
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                             $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/" . $responseupdate->result->file_path;
                             $file = Http::get($url);
                             $filename = $responseupdate->result->file_path;

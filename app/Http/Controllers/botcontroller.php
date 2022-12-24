@@ -1001,6 +1001,13 @@ class botcontroller extends Controller
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data2));
                     }
                 }
+            }else{
+                $data2 = [
+                    'chat_id' => $update->result->callback_query->from->id,
+                    'text' => 'Ошибка еще хуже',
+                ];
+                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
             }
+
         }
     }

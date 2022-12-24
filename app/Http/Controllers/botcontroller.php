@@ -20,12 +20,13 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-            
+
         }
         public function botResponse()
         {
             $result = file_get_contents('php://input');
-            $update = json_decode($result);
+            $resultdecode = json_decode($result);
+            $update = $resultdecode->result;
 
             // message ->
             if (isset($update->message)) {

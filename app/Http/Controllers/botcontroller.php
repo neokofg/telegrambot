@@ -25,8 +25,7 @@ class botcontroller extends Controller
         public function botResponse()
         {
             $result = file_get_contents('php://input');
-            $resultdecode = json_decode($result);
-            $update = $resultdecode->result;
+            $update = json_decode($result);
 
             // message ->
             if (isset($update->message)) {

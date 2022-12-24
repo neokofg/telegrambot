@@ -20,12 +20,6 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-            $data2 = [
-                'file_id' => 'AgACAgIAAxkBAAIJgGOnAsmAXlIGGLGzYIs1CneBY0VcAALwxDEbOVI5Saay3Q9RD0gmAQADAgADbQADLAQ'
-            ];
-            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
-            $responseupdate = json_decode($response);
-            echo $responseupdate->result->file_path;
         }
         public function botResponse()
         {
@@ -565,6 +559,12 @@ class botcontroller extends Controller
                             }
                         }else if($userItem->status == 'passportsend'){
                             if(isset($update->message->photo)){
+                                $data = [
+                                    'chat_id' => $update->message->chat->id,
+                                    'text' => 'Дошло!',
+                                    'reply_to_message_id' => $update->message->message_id,
+                                ];
+                                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                                 $data2 = [
                                     'file_id' => $update->message->photo[1]->file_id
                                 ];

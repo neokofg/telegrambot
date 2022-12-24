@@ -22,9 +22,9 @@ class botcontroller extends Controller
         {
             $result = '
         {
-            "update_id": 255184284,
+            "update_id": 255184297,
             "message": {
-                "message_id": 2317,
+                "message_id": 2330,
                 "from": {
                     "id": 864640107,
                     "is_bot": false,
@@ -40,14 +40,28 @@ class botcontroller extends Controller
                     "username": "neokocs",
                     "type": "private"
                 },
-                "date": 1671873186,
+                "date": 1671878563,
                 "photo": [
                     {
-                        "file_id": "AgACAgIAAxkBAAIJDWOmwqJNwmrwY6ZV9bEvqt5rV2hjAAK-wzEbOVI5SYdT6d3i-EmJAQADAgADcwADLAQ",
-                        "file_unique_id": "AQADvsMxGzlSOUl4",
-                        "file_size": 2008,
+                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA3MAAywE",
+                        "file_unique_id": "AQAD1cMxGzlSOUl4",
+                        "file_size": 2212,
                         "width": 90,
                         "height": 90
+                    },
+                    {
+                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA20AAywE",
+                        "file_unique_id": "AQAD1cMxGzlSOUly",
+                        "file_size": 35320,
+                        "width": 320,
+                        "height": 320
+                    },
+                    {
+                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA3gAAywE",
+                        "file_unique_id": "AQAD1cMxGzlSOUl9",
+                        "file_size": 125641,
+                        "width": 736,
+                        "height": 736
                     }
                 ]
             }

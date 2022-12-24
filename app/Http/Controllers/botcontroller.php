@@ -75,10 +75,7 @@ class botcontroller extends Controller
                 $responseupdate = json_decode($response);
                 if(isset($responseupdate->result->file_path)){
                     $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
-                    $fileoriginalname = basename($url);
-                    $file = file_put_contents($fileoriginalname, file_get_contents($url));
-                    $filename= date('YmdHi').$file->hashName();
-                    $file-> move(public_path('images'), $filename);
+                    Storage::disk('public')->download("https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path);
                     echo 'success!';
                 }else{
                     echo 2;

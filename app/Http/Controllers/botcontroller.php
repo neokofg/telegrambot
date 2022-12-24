@@ -76,9 +76,10 @@ class botcontroller extends Controller
                 if(isset($responseupdate->result->file_path)){
                     $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
                     $file =  Http::get($url);
-                    $fp = fopen($file, 'rb');
+                    $this->base64_to_jpeg($file);
+                    $fp = fopen($this->$output_file, 'rb');
                     header("Content-Type: image/png");
-                    header("Content-Length: " . filesize($file));
+                    header("Content-Length: " . filesize($this->$output_file));
                     return(fpassthru($fp));
                     echo 'success!';
                 }else{
@@ -88,7 +89,23 @@ class botcontroller extends Controller
                 echo 1;
             }
         }
+        function base64_to_jpeg($base64_string, $output_file) {
+            // open the output file for writing
+            $ifp = fopen( $output_file, 'wb' );
 
+            // split the string on commas
+            // $data[ 0 ] == "data:image/png;base64"
+            // $data[ 1 ] == <actual base64 string>
+            $data = explode( ',', $base64_string );
+
+            // we could add validation here with ensuring count( $data ) > 1
+            fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+            // clean up the file resource
+            fclose( $ifp );
+
+            return $output_file;
+        }
         public function botResponse()
         {
             $result = file_get_contents('php://input');

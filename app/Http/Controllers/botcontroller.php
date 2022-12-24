@@ -20,87 +20,7 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-            $result = '
-        {
-            "update_id": 255184297,
-            "message": {
-                "message_id": 2330,
-                "from": {
-                    "id": 864640107,
-                    "is_bot": false,
-                    "first_name": "Андрей",
-                    "last_name": "Архангельский",
-                    "username": "neokocs",
-                    "language_code": "ru"
-                },
-                "chat": {
-                    "id": 864640107,
-                    "first_name": "Андрей",
-                    "last_name": "Архангельский",
-                    "username": "neokocs",
-                    "type": "private"
-                },
-                "date": 1671878563,
-                "photo": [
-                    {
-                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA3MAAywE",
-                        "file_unique_id": "AQAD1cMxGzlSOUl4",
-                        "file_size": 2212,
-                        "width": 90,
-                        "height": 90
-                    },
-                    {
-                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA20AAywE",
-                        "file_unique_id": "AQAD1cMxGzlSOUly",
-                        "file_size": 35320,
-                        "width": 320,
-                        "height": 320
-                    },
-                    {
-                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA3gAAywE",
-                        "file_unique_id": "AQAD1cMxGzlSOUl9",
-                        "file_size": 125641,
-                        "width": 736,
-                        "height": 736
-                    }
-                ]
-            }
-        }';
-            $update = json_decode($result);
-            if(isset($update->message->photo)){
-                $data2 = [
-                    'file_id' => $update->message->photo[0]->file_id
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
-                $responseupdate = json_decode($response);
-                if(isset($responseupdate->result->file_path)){
-                    $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
-                    $file =  Http::get($url);
-                    $filename = $responseupdate->result->file_path;
-                    $filename = explode('/',$filename);
-                    $filename = explode('.',$filename[1]);
-                    $hash = Hash::make($filename[0]);
-                    $hash = str_replace('/','',$hash);
-                    $filename = date('YmdHi').$hash.'.'.$filename[1];
-                    Storage::disk('public')->put($filename, $file);
-                    $userdata = array(
-                        'status' => 'selfiesend',
-                        'firstpassport' => $filename,
-                        "updated_at" => date('Y-m-d H:i:s')
-                    );
-                    DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
-                    $data = [
-                        'chat_id' => $update->message->chat->id,
-                        'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта'.PHP_EOL.'(Кем выдано/сведения о личности владельца паспорта)',
-                        'reply_to_message_id' => $update->message->message_id,
-                    ];
-                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-                }else{
-                    echo 2;
-                }
-            }else{
-                echo 1;
-            }
+
         }
         public function botResponse()
         {
@@ -645,10 +565,10 @@ class botcontroller extends Controller
                                 ];
                                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
                                 $responseupdate = json_decode($response);
-                                if(isset($responseupdate->result->file_path)){
-                                    $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
+                                if(isset($responseupdate->file_path)){
+                                    $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->file_path;
                                     $file =  Http::get($url);
-                                    $filename = $responseupdate->result->file_path;
+                                    $filename = $responseupdate->file_path;
                                     $filename = explode('/',$filename);
                                     $filename = explode('.',$filename[1]);
                                     $hash = Hash::make($filename[0]);

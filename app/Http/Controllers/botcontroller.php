@@ -593,7 +593,6 @@ class botcontroller extends Controller
             foreach ($user as $userItem) {
                 if ($userItem->status == 'passportsend') {
                     if (isset($update->message->photo)) {
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         $data2 = [
                             'file_id' => $update->message->photo[1]->file_id
                         ];

@@ -572,7 +572,7 @@ class botcontroller extends Controller
                             DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта(Кем выдано/сведения о личности владельца паспорта)',
+                                'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта'.PHP_EOL.'(Кем выдано/сведения о личности владельца паспорта)',
                                 'reply_to_message_id' => $update->message->message_id,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
@@ -591,7 +591,6 @@ class botcontroller extends Controller
                             $data2 = [
                                 'chat_id' => $update->message->chat->id,
                                 'text' => 'Работая в нашем сервисе вы соглашаетесь о политике конфиденциальности /policy',
-                                'reply_to_message_id' => $update->message->message_id,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                             $data3 = [
@@ -865,7 +864,7 @@ class botcontroller extends Controller
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data3));
                     $data4 = [
                         'chat_id' => $update->callback_query->from->id,
-                        'text' => 'Отправьте фотографии 2 и 3 страницы вашего пасспорта (Кем выдано/сведения о личности владельца пасспорта)'
+                        'text' => 'Отправьте фотографии 2 и 3 страницы вашего пасспорта '.PHP_EOL.' (Кем выдано/сведения о личности владельца пасспорта)'
                     ];
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data4));
                 } else {

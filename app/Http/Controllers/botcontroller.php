@@ -561,15 +561,10 @@ class botcontroller extends Controller
                         }else if($userItem->status == 'passportsend'){
                             if(isset($update->message->photo)){
                                 $data2 = [
-                                    'file_id' => $update->message->photo[0]->file_id
+                                    'file_id' => $update->message->photo[1]->file_id
                                 ];
                                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
                                 $responseupdate = json_decode($response);
-                                $data = [
-                                    'chat_id' => $update->message->chat->id,
-                                    'text' => 'Доходит',
-                                ];
-                                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                                 if(isset($responseupdate->file_path)){
                                     $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->file_path;
                                     $file =  Http::get($url);
@@ -589,13 +584,6 @@ class botcontroller extends Controller
                                     $data = [
                                         'chat_id' => $update->message->chat->id,
                                         'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта'.PHP_EOL.'(Кем выдано/сведения о личности владельца паспорта)',
-                                    ];
-                                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-                                }else{
-                                    $data = [
-                                        'chat_id' => $update->message->chat->id,
-                                        'text' => 'Отправьте фотографию вашего паспорта!',
-                                        'reply_to_message_id' => $update->message->message_id,
                                     ];
                                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                                 }

@@ -57,7 +57,7 @@ class botcontroller extends Controller
     ]
 }';
             $update = json_encode($result);
-            $update = json_decode($result);
+            $update = json_decode($update);
             if(isset($update->message->photo)){
                 $data2 = [
                     'file_id' => $update->message->photo[0]->file_id

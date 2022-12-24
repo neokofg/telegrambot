@@ -590,6 +590,8 @@ class botcontroller extends Controller
                     }
                 }
             }
+        }else{
+            $user = DB::table('users')->where('userid', '=', $update->message->from->id)->get();
             foreach ($user as $userItem) {
                 if ($userItem->status == 'passportsend') {
                     if (isset($update->message->photo)) {

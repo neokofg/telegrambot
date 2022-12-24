@@ -19,74 +19,7 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-            $result = '
-        {
-            "update_id": 255184297,
-            "message": {
-                "message_id": 2330,
-                "from": {
-                    "id": 864640107,
-                    "is_bot": false,
-                    "first_name": "Андрей",
-                    "last_name": "Архангельский",
-                    "username": "neokocs",
-                    "language_code": "ru"
-                },
-                "chat": {
-                    "id": 864640107,
-                    "first_name": "Андрей",
-                    "last_name": "Архангельский",
-                    "username": "neokocs",
-                    "type": "private"
-                },
-                "date": 1671878563,
-                "photo": [
-                    {
-                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA3MAAywE",
-                        "file_unique_id": "AQAD1cMxGzlSOUl4",
-                        "file_size": 2212,
-                        "width": 90,
-                        "height": 90
-                    },
-                    {
-                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA20AAywE",
-                        "file_unique_id": "AQAD1cMxGzlSOUly",
-                        "file_size": 35320,
-                        "width": 320,
-                        "height": 320
-                    },
-                    {
-                        "file_id": "AgACAgIAAxkBAAIJGmOm16OTHUZIJwIxvbqIAAGzBQip6AAC1cMxGzlSOUlGk2EYcsPnzgEAAwIAA3gAAywE",
-                        "file_unique_id": "AQAD1cMxGzlSOUl9",
-                        "file_size": 125641,
-                        "width": 736,
-                        "height": 736
-                    }
-                ]
-            }
-        }';
-            $update2 = json_encode($result);
-            $update = json_decode($result);
-            if(isset($update->message->photo)){
-                $data2 = [
-                    'file_id' => $update->message->photo[0]->file_id
-                ];
-                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
-                $responseupdate = json_decode($response);
-                if(isset($responseupdate->result->file_path)){
-                    $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
-                    $file =  file_get_contents($url);
-                    Storage::disk('public')->put('file.jpg', $file);
-                    echo 'success!';
-                }else{
-                    echo 2;
-                }
-            }else{
-                echo 1;
-            }
-        }
-        function base64_to_jpeg($base64_string, $output_file) {
-            file_put_contents($output_file, file_get_contents($base64_string));
+
         }
         public function botResponse()
         {
@@ -633,10 +566,12 @@ class botcontroller extends Controller
                                 $responseupdate = json_decode($response);
                                 if(isset($responseupdate->result->file_path)){
                                     $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
-                                    $contents = file_get_contents($url);
-                                    $filename = basename($url);
-                                    $path = public_path('images');
-                                    Storage::put($path, $contents);
+                                    $file =  Http::get($url);
+                                    $filename = $responseupdate->result->file_path;
+                                    $filename = explode('/',$filename);
+                                    $filename = $filename[1];
+                                    $filename = date('YmdHi').$filename->hashName();
+                                    Storage::disk('public')->put($filename, $file);
                                     $userdata = array(
                                         'status' => 'selfiesend',
                                         'firstpassport' => $filename,

@@ -590,11 +590,10 @@ class botcontroller extends Controller
                     }
                 }
             }
-        }else{
+        }else if(isset($update->message->photo)){
             $user = DB::table('users')->where('userid', '=', $update->message->from->id)->get();
             foreach ($user as $userItem) {
                 if ($userItem->status == 'passportsend') {
-                    if (isset($update->message->photo)) {
                         $data = [
                             'chat_id' => $update->message->chat->id,
                             'text' => 'Дошло!',
@@ -637,19 +636,9 @@ class botcontroller extends Controller
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         }
-                    } else {
-                        $data = [
-                            'chat_id' => $update->message->chat->id,
-                            'text' => 'Отправьте фотографию вашего паспорта!',
-                            'reply_to_message_id' => $update->message->message_id,
-                        ];
-                        $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
-                    }
                 }
             }
-        }
-            // callback ->
-            if (isset($update->callback_query)) {
+        }else if (isset($update->callback_query)) {
                 $user = DB::table('users')->where('userid', '=', $update->callback_query->from->id)->get();
                 $parceluser = DB::table('parcels')->where('userid', '=', $update->callback_query->from->id)->get();
                 if ($update->callback_query->data == 2) {

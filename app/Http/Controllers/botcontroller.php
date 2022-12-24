@@ -69,7 +69,7 @@ class botcontroller extends Controller
             $update = json_decode($result);
             if(isset($update->message->photo)){
                 $data2 = [
-                    'file_id' => $update->message->photo->file_id
+                    'file_id' => $update->message->photo[0]->file_id
                 ];
                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
                 $responseupdate = json_decode($response);

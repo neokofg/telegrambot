@@ -19,9 +19,7 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-            $result = '{
-    "ok": true,
-    "result": [
+            $result = '
         {
             "update_id": 255184297,
             "message": {
@@ -66,9 +64,7 @@ class botcontroller extends Controller
                     }
                 ]
             }
-        }
-    ]
-}';
+        }';
             $update2 = json_encode($result);
             $update = json_decode($result);
             if(isset($update->message->photo)){

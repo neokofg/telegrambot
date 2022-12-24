@@ -24,7 +24,7 @@ class botcontroller extends Controller
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
             $responseupdate = json_decode($response);
-            echo $response->file_path;
+            echo $responseupdate->file_path;
         }
 
         public function botResponse()

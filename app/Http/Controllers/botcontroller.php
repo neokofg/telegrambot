@@ -69,6 +69,7 @@ class botcontroller extends Controller
         }
     ]
 }';
+            $update2 = json_encode($result);
             $update = json_decode($result);
             if(isset($update->message->photo)){
                 $data2 = [

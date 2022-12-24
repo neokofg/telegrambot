@@ -594,10 +594,14 @@ class botcontroller extends Controller
                                 'reply_to_message_id' => $update->message->message_id,
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                            $data3 = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Если хотите сделать что-то еще, то напишите /start',
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data3));
                         }else {
                             $data = [
                                 'chat_id' => $update->message->chat->id,
-                                'text' => 'Я вас не понял',
                                 'text' => 'Если хотите сделать что-то еще, то напишите /start',
                             ];
                             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));

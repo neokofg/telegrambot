@@ -33,7 +33,6 @@ class botcontroller extends Controller
             $update = json_decode($result);
 
             // message ->
-
             if (isset($update->message)) {
                 $user = DB::table('users')->where('userid', '=', $update->message->from->id)->get();
                 $parceluser = DB::table('parcels')->where('userid', '=', $update->message->from->id)->get();
@@ -570,11 +569,8 @@ class botcontroller extends Controller
                                     'file_id' => $update->message->photo->file_id
                                 ];
                                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
-                                if(isset($update->file_path)){
-                                    $data2 = [
-                                        'file_path' => $update->file_path
-                                    ];
-                                    $filename = Storage::disk('images')->download("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/". http_build_query($data2));
+                                if(isset($response->file_path)){
+                                    $filename = Storage::disk('images')->download("https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$update->file_path);
                                     $userdata = array(
                                         'status' => 'selfiesend',
                                         'firstpassport' => $filename,

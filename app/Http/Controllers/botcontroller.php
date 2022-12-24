@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use SebastianBergmann\CodeCoverage\Report\PHP;
@@ -564,21 +565,41 @@ class botcontroller extends Controller
                                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                             }
                         }else if($userItem->status == 'passportsend'){
-                            $userdata = array(
-                                'status' => 'selfiesend',
-                                'passport' => 'true',
-                                "updated_at" => date('Y-m-d H:i:s')
-                            );
-                            DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
-                            $data = [
-                                'chat_id' => $update->message->chat->id,
-                                'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта'.PHP_EOL.'(Кем выдано/сведения о личности владельца паспорта)',
-                                'reply_to_message_id' => $update->message->message_id,
-                            ];
-                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                            if(isset($update->message->photo)){
+                                $data2 = [
+                                    'file_id' => $update->message->photo->file_id
+                                ];
+                                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
+                                if(isset($update->file_path)){
+                                    $data2 = [
+                                        'file_path' => $update->file_path
+                                    ];
+                                    return Storage::disk('images')->download("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/". http_build_query($data2),$name);
+                                    $userdata = array(
+                                        'status' => 'selfiesend',
+                                        'firstpassport' => $name,
+                                        "updated_at" => date('Y-m-d H:i:s')
+                                    );
+                                    DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
+                                    $data = [
+                                        'chat_id' => $update->message->chat->id,
+                                        'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта'.PHP_EOL.'(Кем выдано/сведения о личности владельца паспорта)',
+                                        'reply_to_message_id' => $update->message->message_id,
+                                    ];
+                                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                                }
+                            }else{
+                                $data = [
+                                    'chat_id' => $update->message->chat->id,
+                                    'text' => 'Отправьте фотографию вашего паспорта!',
+                                    'reply_to_message_id' => $update->message->message_id,
+                                ];
+                                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                            }
                         }else if($userItem->status == 'selfiesend'){
                             $userdata = array(
                                 'status' => 'started',
+                                'passport' => 'true',
                                 "updated_at" => date('Y-m-d H:i:s')
                             );
                             DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);

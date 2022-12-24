@@ -19,12 +19,11 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-            foreach (range(0, 99999) as $check) {
-                echo $check;
-                if ($check == 10) {
-                    break;
-                }
-            }
+            $data2 = [
+                'file_id' => 'AgACAgIAAxkBAAIJDWOmwqJNwmrwY6ZV9bEvqt5rV2hjAAK-wzEbOVI5SYdT6d3i-EmJAQADAgADcwADLAQ'
+            ];
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
+            echo $response;
         }
 
         public function botResponse()

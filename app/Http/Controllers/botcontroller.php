@@ -36,6 +36,16 @@ class botcontroller extends Controller
             if (isset($update->message)) {
                 $user = DB::table('users')->where('userid', '=', $update->message->from->id)->get();
                 $parceluser = DB::table('parcels')->where('userid', '=', $update->message->from->id)->get();
+                $keyboard2 =
+                    '{
+                             "inline_keyboard": [[
+                                            {
+                                                "text": "Пройти",
+                                                "callback_data": "13"
+                                            }]
+                                        ]
+                                    }';
+                $decode2 = json_decode($keyboard2);
                 if ($parceluser == '[]') {
                     $keyboard =
                         '{
@@ -113,8 +123,8 @@ class botcontroller extends Controller
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                         $data2 = [
                             'chat_id' => $update->message->chat->id,
-                            'text' => 'Что вы хотите сделать?',
-                            'reply_markup' => json_encode($decode)
+                            'text' => 'Вам нужно пройти паспортную аутентификацию для того чтобы пользоваться нашим сервисом',
+                            'reply_markup' => json_encode($decode2)
                         ];
                         $userdata = array(
                             'status' => 'started',
@@ -124,7 +134,25 @@ class botcontroller extends Controller
                         $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
                     } else {
                         foreach ($user as $userItem) {
-                            if ($userItem->isstart == 'true') {
+                            if ($userItem->passport == 'false') {
+                                $userdata = array(
+                                    'status' => 'started',
+                                    'firstcity' => 'null',
+                                    'secondcity' => 'null',
+                                    'date' => 'null',
+                                    'weight' => 'null',
+                                    'item' => 'null',
+                                    'phone' => 'null',
+                                    "updated_at" => date('Y-m-d H:i:s')
+                                );
+                                DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
+                                $data2 = [
+                                    'chat_id' => $update->message->chat->id,
+                                    'text' => 'Вам нужно пройти паспортную аутентификацию для того чтобы пользоваться нашим сервисом',
+                                    'reply_markup' => json_encode($decode2)
+                                ];
+                                $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                            }else if($userItem->passport != 'false'){
                                 $userdata = array(
                                     'status' => 'started',
                                     'firstcity' => 'null',
@@ -535,7 +563,38 @@ class botcontroller extends Controller
                                 ];
                                 $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
                             }
-                        } else {
+                        }else if($userItem->status == 'passportsend'){
+                            $userdata = array(
+                                'status' => 'selfiesend',
+                                'passport' => 'true',
+                                "updated_at" => date('Y-m-d H:i:s')
+                            );
+                            DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Отправьте ваше селфи с 2 и 3 страницы вашего паспорта(Кем выдано/сведения о личности владельца паспорта)',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                        }else if($userItem->status == 'selfiesend'){
+                            $userdata = array(
+                                'status' => 'started',
+                                "updated_at" => date('Y-m-d H:i:s')
+                            );
+                            DB::table('users')->where('userid', '=', $update->message->from->id)->update($userdata);
+                            $data = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Успешно!',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data));
+                            $data2 = [
+                                'chat_id' => $update->message->chat->id,
+                                'text' => 'Работая в нашем сервисе вы соглашаетесь о политике конфиденциальности /policy',
+                                'reply_to_message_id' => $update->message->message_id,
+                            ];
+                            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                        }else {
                             $data = [
                                 'chat_id' => $update->message->chat->id,
                                 'text' => 'Я вас не понял',
@@ -788,6 +847,23 @@ class botcontroller extends Controller
                         'text' => 'Если хотите сделать что-то еще, то напишите /start',
                     ];
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data2));
+                }else if ($update->callback_query->data == 13){
+                    $userdata = array(
+                        'status' => 'passportsend',
+                        "updated_at" => date('Y-m-d H:i:s')
+                    );
+                    DB::table('users')->where('userid', '=', $update->callback_query->from->id)->update($userdata);
+                    $data3 = [
+                        'chat_id' => $update->message->chat->id,
+                        'message_id' => $update->callback_query->message->message_id,
+                        'text' => 'Мы храним паспортные данные всех пользователей для безопасности всех заинтересованных лиц',
+                    ];
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data3));
+                    $data4 = [
+                        'chat_id' => $update->message->chat->id,
+                        'text' => 'Отправьте фотографии 2 и 3 страницы вашего пасспорта (Кем выдано/сведения о личности владельца пасспорта)'
+                    ];
+                    $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data4));
                 } else {
                     $callback = $update->callback_query->data;
                     $callbackpieces = explode(" ", $callback);

@@ -864,7 +864,7 @@ class botcontroller extends Controller
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/editMessageText?" . http_build_query($data3));
                     $data4 = [
                         'chat_id' => $update->callback_query->from->id,
-                        'text' => 'Отправьте фотографии 2 и 3 страницы вашего пасспорта '.PHP_EOL.' (Кем выдано/сведения о личности владельца пасспорта)'
+                        'text' => 'Отправьте фотографию 2 и 3 страницы вашего паспорта '.PHP_EOL.'(Кем выдано/сведения о личности владельца паспорта)'
                     ];
                     $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/sendMessage?" . http_build_query($data4));
                 } else {

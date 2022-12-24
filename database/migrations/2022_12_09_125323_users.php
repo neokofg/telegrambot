@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('price')->nullable();
             $table->string('isstart');
             $table->string('passport');
+            $table->string('firstpassport');
+            $table->string('firstselfie');
             $table->timestamps();
         });
     }

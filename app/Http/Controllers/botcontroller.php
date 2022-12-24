@@ -20,7 +20,23 @@ class botcontroller extends Controller
 
         public function testBOT()
         {
-
+            $data2 = [
+                'file_id' => 'AgACAgIAAxkBAAIJDGOmv6KTSA0IyjE9mkC_4KX9cGFuAAK-wzEbOVI5SYdT6d3i-EmJAQADAgADeAADLAQ'
+            ];
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?". http_build_query($data2));
+            $responseupdate = json_decode($response);
+            if(isset($responseupdate->result->file_path)){
+                $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/".$responseupdate->result->file_path;
+                $file =  Http::get($url);
+                $filename = $responseupdate->result->file_path;
+                $filename = explode('/',$filename);
+                $filename = explode('.',$filename[1]);
+                $hash = Hash::make($filename[0]);
+                $hash = str_replace('/','',$hash);
+                $filename = date('YmdHi').$hash.'.'.$filename[1];
+                Storage::disk('public')->put($filename, $file);
+                echo 'success';
+            }
         }
         public function botResponse()
         {

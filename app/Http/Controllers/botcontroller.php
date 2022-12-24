@@ -25,7 +25,9 @@ class botcontroller extends Controller
             $filename = 'photos/file_0.jpg';
             $filename = explode('/',$filename);
             $filename = explode('.',$filename[1]);
-            $filename = date('YmdHi').Hash::make($filename[0]).'.'.$filename[1];
+            $hash = Hash::make($filename[0]);
+            $hash = str_replace('.','',$hash);
+            $filename = date('YmdHi').$hash.'.'.$filename[1];
             Storage::disk('public')->put($filename, $file);
         }
         public function botResponse()

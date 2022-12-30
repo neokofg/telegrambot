@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use SebastianBergmann\CodeCoverage\Report\PHP;
+use thiagoalessio\TesseractOCR\TesseractOCR;
 
 class botcontroller extends Controller
 {
@@ -20,6 +21,26 @@ class botcontroller extends Controller
 
     public function testBOT()
     {
+            $data2 = [
+                'file_id' => 'AgACAgIAAxkBAAIKQGOuw6eR4vC63vdfGRUi4-cwVKwdAAIXxDEbTsl4Se7SKWvF45x-AQADAgADbQADLQQ'
+            ];
+            $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?" . http_build_query($data2));
+            $responseupdate = json_decode($response);
+            if (isset($responseupdate->result->file_path)) {
+                $url = "https://api.telegram.org/file/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/" . $responseupdate->result->file_path;
+                $file = Http::get($url);
+                $filename = $responseupdate->result->file_path;
+                $filename = explode('/', $filename);
+                $filename = explode('.', $filename[1]);
+                $hash = Hash::make($filename[0]);
+                $hash = str_replace('/', '', $hash);
+                $filename = date('YmdHi') . $hash . '.' . $filename[1];
+                Storage::disk('public')->put($filename, $file);
+                $ocr = new TesseractOCR();
+                $ocr->image(public_path('images').$filename);
+                $ocr->run();
+                echo $ocr;
+            }
     }
 
     public function botResponse()

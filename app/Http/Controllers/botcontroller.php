@@ -22,7 +22,7 @@ class botcontroller extends Controller
     public function testBOT()
     {
             $data2 = [
-                'file_id' => 'AgACAgIAAxkBAAIKQGOuw6eR4vC63vdfGRUi4-cwVKwdAAIXxDEbTsl4Se7SKWvF45x-AQADAgADbQADLQQ'
+                'file_id' => 'AgACAgIAAxkBAAIKVmO1qjdgVJgJ2hWNjSYMfQABp1qm0AACZsUxGxHVqUkCouLqSvH4hwEAAwIAA3gAAy0E'
             ];
             $response = Http::get("https://api.telegram.org/bot5716304295:AAHVDPCzodAQOwQU5G-7kLfRUU7AVa2VTRg/getFile?" . http_build_query($data2));
             $responseupdate = json_decode($response);
@@ -37,7 +37,7 @@ class botcontroller extends Controller
                 $filename = date('YmdHi') . $hash . '.' . $filename[1];
                 Storage::disk('public')->put($filename, $file);
                 $ocr = new TesseractOCR();
-                $ocr->image(public_path('images').$filename);
+                $ocr->image(public_path('images/').$filename);
                 $ocr->run();
                 echo $ocr;
             }

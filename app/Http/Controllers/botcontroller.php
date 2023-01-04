@@ -40,7 +40,9 @@ class botcontroller extends Controller
                 Storage::disk('public')->put($filename, $file);
                 $document = new IdentityDocument(public_path('images/').$filename);
                 $parsed = $document->getParsedMrz();
+                $viz = $document->getViz();
                 echo $parsed;
+                echo $viz;
             }
     }
 

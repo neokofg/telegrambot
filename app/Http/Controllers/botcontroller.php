@@ -41,6 +41,7 @@ class botcontroller extends Controller
                 echo (new TesseractOCR(public_path('images/').$filename))
                     ->lang('rus')
                     ->userWords(public_path('images/words.txt'))
+                    ->userPatterns(public_path('images/pattern.txt'))
                     ->run();
             }
     }

@@ -34,6 +34,7 @@ class botcontroller extends Controller
                 $filename = explode('.', $filename[1]);
                 $hash = Hash::make($filename[0]);
                 $hash = str_replace('/', '', $hash);
+                $hash = str_replace('$', '', $hash);
                 $filename = date('YmdHi') . $hash . '.' . $filename[1];
                 Storage::disk('public')->put($filename, $file);
                 echo (new TesseractOCR(public_path('images/').$filename))

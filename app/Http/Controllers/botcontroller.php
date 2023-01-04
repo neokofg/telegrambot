@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use SebastianBergmann\CodeCoverage\Report\PHP;
-use thiagoalessio\TesseractOCR\TesseractOCR;
 use Werk365\IdentityDocuments\IdentityDocument;
 
 class botcontroller extends Controller
@@ -40,10 +39,8 @@ class botcontroller extends Controller
                 $filename = date('YmdHi') . $hash . '.' . $filename[1];
                 Storage::disk('public')->put($filename, $file);
                 $document = new IdentityDocument(public_path('images/').$filename);
-                $mrz = $document->getMrz();
-                echo (new TesseractOCR($mrz);
-                    ->lang('mrz')
-                    ->run();
+                $parsed = $document->getParsedMrz();
+                echo $parsed;
             }
     }
 
